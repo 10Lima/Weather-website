@@ -25,4 +25,3 @@ def index(request):
     else:
         return render(request, 'G2app/index.html')
     
-    # python manage.py runserver ( rodar o servidor)

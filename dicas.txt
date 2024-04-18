@@ -1,0 +1,7 @@
+ python manage.py runserver ( rodar o servidor)
+    
+atualizar ficheiros no reposito(escrever estes comandos na bash do git)
+    git add .
+    git commit -m "O que fizeste ex:(atualização no codigo)"
+    git push
+    
