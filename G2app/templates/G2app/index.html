@@ -8,6 +8,19 @@
     <link rel="stylesheet" href="{% static 'G2app/style.css' %}">
 </head>
 <body>
+    {% block navbar %}
+  <header>
+    <div class="navbar">
+         <a href="#" class="navbar-brand">Meteorologia</a>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="#">Sobre</a>
+            <a href="#">Contato</a>
+
+    </div><!-- nav bar--> 
+
+    {% endblock navbar %}
+</header>  
+<main>
     <div class="weather-form">
         <h2>Verifique o Clima</h2>
         <form method="post" action="{% url 'index' %}"> <!-- Use 'index' ou a URL correta para o seu caso -->
@@ -33,7 +46,7 @@
         <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
     </div>
     {% endif %}
-
+</main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script>
 </body>
