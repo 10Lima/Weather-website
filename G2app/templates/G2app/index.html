@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Meteorológica</title>
+    <link rel="stylesheet" href="{% static 'G2app/style.css' %}">
+</head>
+<body>
+    <div class="weather-form">
+        <h2>Verifique o Clima</h2>
+        <form method="post" action="{% url 'index' %}"> <!-- Use 'index' ou a URL correta para o seu caso -->
+            {% csrf_token %}
+            <div class="form-control">
+                <input type="text" name="location" placeholder="Digite um local..." required>
+            </div>
+            <div class="form-control">
+                <button type="submit">Procurar Clima</button>
+            </div>
+        </form>
+    </div>
+    
+    {% if location %}
+    <div class="weather-results">
+        <p>Localização: {{ location }}</p>
+        <p>Temperatura Atual: {{ temperature }}°C</p>
+        <p>Temperatura Máxima: {{ temp_max }}°C</p>
+        <p>Temperatura Mínima: {{ temp_min }}°C</p>
+        <p>Pressão: {{ pressure }} hPa</p>
+        <p>Chuva na Última Hora: {{ rain }}mm</p>
+        <p>Condições: {{ description }}</p>
+        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
+    </div>
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script>
+</body>
+</html>

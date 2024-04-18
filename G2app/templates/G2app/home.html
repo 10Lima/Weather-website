@@ -1,0 +1,29 @@
+{% extends "base.html"%} 
+{% block title %} Metreologia {% endblock %}
+{% block content %}
+<div class="weather-form">
+    <h2>Verifique o Clima</h2>
+    <form id="location-form" method="post" action="{% url 'index' %}">
+      {% csrf_token %}
+      <div class="form-control">
+        <input type="text" name="location" placeholder="Digite um local..." required>
+      </div>
+      <div class="form-control">
+        <button type="submit">Procurar Clima</button>
+      </div>
+    </form>
+  </div>
+
+{% if location %}
+    <div>
+        <p>Localização: {{ location }}</p>
+        <p>Temperatura Atual: {{ temperature }}°C</p>
+        <p>Temperatura Máxima: {{ temp_max }}°C</p>
+        <p>Temperatura Mínima: {{ temp_min }}°C</p>
+        <p>Chuva na Última Hora: {{ rain }}mm</p>
+        <p>Condições: {{ description }}</p>
+        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
+    </div>
+{% endif %}
+
+{% endblock content %}
