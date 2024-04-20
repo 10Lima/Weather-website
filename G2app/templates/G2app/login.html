@@ -1,0 +1,20 @@
+<!-- login.html -->
+{% extends 'G2app/index.html' %}  
+{% block content %}
+  <div class="login-box">
+    <h1>Login</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_username">Email</label>
+      {{ form.username }}
+      
+      <label for="id_password">Password</label>
+      {{ form.password }}
+      
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+  <p class="para-2">
+    Não tens conta? <a href="{% url 'signup' %}">Cria aqui</a>
+  </p>
+{% endblock %}

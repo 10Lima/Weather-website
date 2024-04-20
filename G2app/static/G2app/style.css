@@ -10,24 +10,34 @@ body {
     background-color: #f4f4f4;
 
 }
-header{
-    padding: 0px 0%;
 
-}
-header > .navbar {
+header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to right, #6dd5ed, #2193b0); /* Gradiente de céu azul */
-    padding: 1rem 0;
+    background: linear-gradient(to right, #6dd5ed, #2193b0); 
+    padding: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: start; /* Alinha o conteúdo à esquerda */
     align-items: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 1000; /* Garante que a navbar fique acima de outros conteúdos */
+    z-index: 1000; 
 }
 
+.logo {
+    margin-right: 20px; /* Ajusta o espaço entre o logo e a navbar */
+}
+
+.logo img {
+    height: 60px; /* Ajusta o tamanho do logo conforme necessário */
+    width: 70px; /* Mantém as proporções da imagem */
+}
+
+.navbar {
+    display: flex; /* Isso irá alinhar seus links horizontalmente */
+    align-items: center; /* Alinha os itens da navbar verticalmente */
+}
 .navbar a {
     text-decoration: none;
     color: white;
@@ -39,7 +49,7 @@ header > .navbar {
 
 .navbar a:hover,
 .navbar a:focus {
-    color: #ffd700; /* Efeito de hover amarelo como o sol */
+    color: #ffd700; 
     transition: color 0.3s;
 }
 
@@ -70,11 +80,13 @@ header > .navbar {
 .weather-form {
     background: #fff;
     padding: 2em;
+    margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.2);
 }
 
 .weather-form h2 {
+    
     color: #333;
     margin-bottom: 1em;
 }
@@ -105,3 +117,62 @@ header > .navbar {
 .form-control button:hover {
     background-color: #0056b3;
 }
+.signup-box {
+    width: 360px;
+    height: 620px;
+    margin: auto;
+    background-color: white;
+    border-radius: 3px;
+    margin-top: 200px;
+
+  }
+  
+  .login-box {
+    width: 360px;
+    height: 280px;
+    margin: auto;
+    border-radius: 3px;
+    background-color: white;
+    margin-top: 200px;
+  }
+  
+
+  form {
+    width: 300px;
+    margin-left: 20px;
+  }
+  
+  form label {
+    display: flex;
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+  }
+  input[type="button"] {
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+  }
+  p {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 15px;
+  }
+  .para-2 {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    margin-top: -10px;
+  }

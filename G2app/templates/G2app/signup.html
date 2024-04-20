@@ -1,0 +1,29 @@
+{% extends 'G2app/index.html' %}  
+{% block content %}
+<div class="signup-box">
+    <h1>Criar Conta</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_username">Primeiro Nome</label>
+      {{ form.username }}
+      
+      <label for="id_email">Email</label>
+      {{ form.email }}
+      
+      <label for="id_password1">Password</label>
+      {{ form.password1 }}
+      
+      <label for="id_password2">Confirmar Password</label>
+      {{ form.password2 }}
+
+      <input type="submit" value="Submit" />
+    </form>
+    <p>
+      Ao clicar no botão de Inscrição, você concorda com nossos<br />
+      <a href="#">Termos e Condições</a> e <a href="#">Política de Privacidade</a>
+    </p>
+  </div>
+  <p class="para-2">
+    Já tens conta? <a href="{% url 'login' %}">Entrar aqui</a>
+  </p>
+{% endblock %}
