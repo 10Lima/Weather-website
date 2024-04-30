@@ -1,3 +1,4 @@
+<!--index.html-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,41 +15,19 @@
         <img src="{% static 'G2app/img/logo.png' %}" alt="descrição imagem">
     </div>
     <div class="navbar">
-         <a href="#" class="navbar-brand">Meteorologia</a>
-        <a href="{% url 'index' %}">Inicio</a>
-        <a href="#">Historico</a>
-        <a href="{% url 'signup' %}">Conta</a>
+        <a href="{% url 'inicio' %}" class="navbar-brand">Meteorologia</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'perfil' %}">Conta</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
     </div> 
 
     {% endblock navbar %}
 </header>  
 <main>
     {% block content %}{% endblock %}
-    <div class="weather-form">
-        <h2>Verifique o Clima</h2>
-        <form method="post" action="{% url 'index' %}"> 
-            {% csrf_token %}
-            <div class="form-control">
-                <input type="text" name="location" placeholder="Digite um local..." required>
-            </div>
-            <div class="form-control">
-                <button type="submit">Procurar Clima</button>
-            </div>
-        </form>
-    </div>
     
-    {% if location %}
-    <div class="weather-results">
-        <p>Localização: {{ location }}</p>
-        <p>Temperatura Atual: {{ temperature }}°C</p>
-        <p>Temperatura Máxima: {{ temp_max }}°C</p>
-        <p>Temperatura Mínima: {{ temp_min }}°C</p>
-        <p>Pressão: {{ pressure }} hPa</p>
-        <p>Chuva na Última Hora: {{ rain }}mm</p>
-        <p>Condições: {{ description }}</p>
-        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
-    </div>
-    {% endif %}
 
 </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

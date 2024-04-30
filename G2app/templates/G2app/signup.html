@@ -1,3 +1,4 @@
+<!--signup.html-->
 {% extends 'G2app/index.html' %}  
 {% block content %}
 <div class="signup-box">
@@ -19,11 +20,16 @@
       <input type="submit" value="Subemeter" />
     </form>
     <p>
-      Ao clicar no botão de Inscrição, você concorda com nossos<br />
+      Ao clicar no botão de Inscrição,concordas com nossos<br />
       <a href="#">Termos e Condições</a> e <a href="#">Política de Privacidade</a>
     </p>
   </div>
   <p class="para-2">
     Já tens conta? <a href="{% url 'login' %}">Entrar aqui</a>
   </p>
+  {% if form.errors %}
+    <div class="error-messages">
+        {{ form.errors }}
+    </div>
+{% endif %}
 {% endblock %}

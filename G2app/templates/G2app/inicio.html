@@ -1,0 +1,76 @@
+<!-- inicio.html -->
+{% extends 'G2app/index.html' %}  
+{% block content %}
+<div class="weather-form">
+    <h2>Verifique o Clima</h2>
+    <form method="post" action="{% url 'inicio' %}"> 
+        {% csrf_token %}
+        <div class="form-control">
+            <input type="text" name="location" placeholder="Digite um local..." required>
+        </div>
+        <div class="form-control">
+            <button type="submit">Procurar Clima</button>
+        </div>
+    </form>
+</div>
+
+{% if location %}
+<div class="weather-results">
+    <p>Localização: {{ location }}</p>
+    <p>Temperatura Atual: {{ temperature }}°C</p>
+    <p>Temperatura Máxima: {{ temp_max }}°C</p>
+    <p>Temperatura Mínima: {{ temp_min }}°C</p>
+    <p>Pressão: {{ pressure }} hPa</p>
+    <p>Chuva na Última Hora: {{ rain }}mm</p>
+    <p>Condições: {{ description }}</p>
+    <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
+</div>
+<div class="weather-forecast">
+    <h2>Previsão para os Próximos 7 Dias</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Temp. Máxima</th>
+                <th>Temp. Mínima</th>
+                <th>Condições</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in forecast_data %}
+            <tr>
+                <td>{{ day.dt | date:"d/m/Y" }}</td>
+                <td>{{ day.temp.max }}°C</td>
+                <td>{{ day.temp.min }}°C</td>
+                <td>{{ day.weather.0.description | title }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Histórico do clima para os últimos 5 dias -->
+<div class="weather-history">
+    <h2>Historico dos Últimos 5 Dias</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Temperatura</th>
+                <th>Condições</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in historical_data %}
+            <tr>
+                <td>{{ day.dt | date:"d/m/Y" }}</td>
+                <td>{{ day.temp }}°C</td>
+                <td>{{ day.weather.0.description | title }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}

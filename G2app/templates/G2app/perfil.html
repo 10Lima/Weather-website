@@ -1,0 +1,42 @@
+<!-- perfil.html -->
+
+{% extends 'G2app/index.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="main-body">
+    
+    <!-- Breadcrumb - Opcional, pode remover se não precisar -->
+    <!-- Código omitido para brevidade -->
+
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <!-- Informações do usuário e foto, se quiser adicionar -->
+        <!-- Código omitido para brevidade -->
+
+        <!-- Histórico de Pesquisas -->
+        <div class="card mt-3">
+          <div class="card-body">
+            <h4>Histórico de Pesquisas Meteorológicas</h4>
+            <ul class="list-group list-group-flush">
+              {% for pesquisa in historico %}
+                <li class="list-group-item">
+                  {{ pesquisa.data }} - {{ pesquisa.local }}: {{ pesquisa.temperatura }}°C
+                </li>
+              {% empty %}
+                <li class="list-group-item">Você ainda não fez nenhuma pesquisa.</li>
+              {% endfor %}
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- Outras informações do usuário, se quiser adicionar -->
+      <!-- Código omitido para brevidade -->
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+

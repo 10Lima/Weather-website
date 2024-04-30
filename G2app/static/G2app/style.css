@@ -1,14 +1,16 @@
-*{
-    margin:0;
-    padding:0;
+/*stayle.css*/
+/* Estilo global e body */
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: 'Kanit', sans-serif;
-
+    font-family: 'Arial', sans-serif; /* Fonte padrão para consistência */
 }
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
 
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
 }
 
 header {
@@ -16,14 +18,15 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to right, #6dd5ed, #2193b0); 
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
     padding: 20px;
     display: flex;
-    justify-content: start; /* Alinha o conteúdo à esquerda */
+    justify-content: start;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 1000; 
+    z-index: 100;
 }
+
 
 .logo {
     margin-right: 20px; /* Ajusta o espaço entre o logo e a navbar */
@@ -37,6 +40,7 @@ header {
 .navbar {
     display: flex; /* Isso irá alinhar seus links horizontalmente */
     align-items: center; /* Alinha os itens da navbar verticalmente */
+    z-index: 50;
 }
 .navbar a {
     text-decoration: none;
@@ -77,13 +81,18 @@ header {
     color: white;
 }
 
+/* Estilização do formulário de procura */
 .weather-form {
     background: #fff;
     padding: 2em;
-    margin-top: 20px;
+    margin: 100px auto; /* Aumenta a margem superior para afastar do cabeçalho */
     border-radius: 10px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    text-align: center; /* Centraliza o texto dentro do formulário */
+    width: 50%; /* Define uma largura para o formulário */
+    max-width: 600px; /* Limita a largura máxima para grandes telas */
 }
+
 
 .weather-form h2 {
     
@@ -93,27 +102,23 @@ header {
 
 .form-control {
     margin-bottom: 1em;
-    width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza os elementos filhos horizontalmente */
 }
-
-.form-control input {
-    width: calc(100% - 22px);
+.form-control input,
+.form-control button {
+    width: 90%; /* Controla a largura do input e do botão */
     padding: 10px;
-    margin: 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    margin: 5px; /* Ajusta a margem para um espaçamento uniforme */
 }
 
 .form-control button {
-    width: 100%;
-    padding: 10px;
-    border: none;
     background-color: #007bff;
     color: white;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
 }
-
 .form-control button:hover {
     background-color: #0056b3;
 }
@@ -176,3 +181,127 @@ header {
     font-size: 15px;
     margin-top: -10px;
   }
+  .container {
+    max-width: 1000px; /* Ajuste a largura conforme necessário */
+    margin: auto;
+    padding-top: 120px; /* Ajuste para não ficar sob o header */
+    background-color: #f4f4f4;
+    z-index: 50;
+}
+
+.main-body {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+.list-group-item {
+    border: none; /* Remove as bordas dos itens do grupo de listas */
+}
+
+.list-group-flush .list-group-item {
+    border-right-width: 0;
+    border-left-width: 0; /* Estiliza bordas caso queira manter */
+}
+
+/* Estilo para o título do histórico */
+.card-body h4 {
+    color: #333;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/*estilo de caixa de pervisões e hitorico*/
+/* Reset básico para garantir consistência entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.6;
+  }
+  
+  .weather-forecast,
+  .weather-history {
+    max-width: 800px; /* Ajuste a largura como necessário */
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .weather-forecast h2, 
+  .weather-history h2 {
+    border-bottom: 2px solid #2193b0;
+    color: #2193b0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table th,
+  table td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #2193b0;
+    color: white;
+  }
+  
+  /* Estilizando os cabeçalhos do dia da semana */
+  .day-header {
+    background-color: #2193b0;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Estilizando os detalhes do clima diário */
+  .day-details {
+    background-color: #f9f9f9;
+    border-left: 5px solid #2193b0;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .day-details div {
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo para o ícone do clima */
+  .weather-icon {
+    width: 50px; /* Ajuste conforme o necessário */
+    height: 50px; /* Ajuste conforme o necessário */
+  }
+  
+  /* Estilos para a seção de dados como vento, UV, etc. */
+  .data-section {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .data-item {
+    background-color: #e3f2fd;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  

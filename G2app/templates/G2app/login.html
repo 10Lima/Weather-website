@@ -17,4 +17,9 @@
   <p class="para-2">
     Não tens conta? <a href="{% url 'signup' %}">Cria aqui</a>
   </p>
+  {% if form.errors %}
+    <div class="error-messages">
+        {{ form.errors }}
+    </div>
+{% endif %}
 {% endblock %}
