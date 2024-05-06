@@ -3,10 +3,20 @@
 {% block content %}
 <div class="weather-form">
     <h2>Verifique o Clima</h2>
-    <form method="post" action="{% url 'inicio' %}"> 
+    <form method="post" action="{% url 'inicio' %}">
         {% csrf_token %}
-        <div class="form-control">
+        <div class="form-choice">
+            <input type="radio" id="byLocation" name="search_type" value="location" checked>
+            <label for="byLocation">Pesquisar por Local</label>
+            <input type="radio" id="byCoordinates" name="search_type" value="coordinates">
+            <label for="byCoordinates">Pesquisar por Coordenadas</label>
+        </div>
+        <div class="form-control" id="locationField">
             <input type="text" name="location" placeholder="Digite um local..." required>
+        </div>
+        <div class="form-control" id="coordinatesField" style="display:none;">
+            <input type="text" name="latitude" placeholder="Latitude" required>
+            <input type="text" name="longitude" placeholder="Longitude" required>
         </div>
         <div class="form-control">
             <button type="submit">Procurar Clima</button>
@@ -45,6 +55,7 @@
                 <td>{{ day.weather.0.description | title }}</td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
 </div>

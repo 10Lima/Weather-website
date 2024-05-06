@@ -32,5 +32,23 @@
 </main>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchTypeRadios = document.querySelectorAll('input[name="search_type"]');
+            const locationField = document.getElementById('locationField');
+            const coordinatesField = document.getElementById('coordinatesField');
+        
+            searchTypeRadios.forEach(radio => radio.addEventListener('change', function() {
+                if (this.value === 'location') {
+                    locationField.style.display = '';
+                    coordinatesField.style.display = 'none';
+                } else {
+                    locationField.style.display = 'none';
+                    coordinatesField.style.display = '';
+                }
+            }));
+        });
+        </script>
+        
 </body>
 </html>

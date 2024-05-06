@@ -12,12 +12,19 @@ from datetime import datetime, timedelta
 #Mostrar os dados metereologicoa quadno se pesquisa o local
 def inicio(request):
     if request.method == 'POST':
-        location = request.POST['location']
+        search_type = request.POST['search_type']
         api_key = '941376db0bf38f9867c309281b11da60'
-        api_url = api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
+        
+        if search_type == 'location':
+            location = request.POST['location']
+            api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
+        else:
+            latitude = request.POST['latitude']
+            longitude = request.POST['longitude']
+            api_url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&lang=pt&units=metric'
+
         response = requests.get(api_url)
         weather_data = response.json()
-
         lat =  weather_data.get('coord', {}).get('lat')
         lon =  weather_data.get('coord', {}).get('lon')
 
