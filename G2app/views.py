@@ -6,7 +6,7 @@ from .forms import SignUpForm
 from .models import HistoricoPesquisa
 import json
 from datetime import datetime, timedelta
-
+from django.contrib import messages
 
 
 #Mostrar os dados metereologicoa quadno se pesquisa o local
@@ -14,24 +14,36 @@ def inicio(request):
     if request.method == 'POST':
         search_type = request.POST['search_type']
         api_key = '941376db0bf38f9867c309281b11da60'
+        location = None 
+        coordinates = None
         
         if search_type == 'location':
-            location = request.POST['location']
-            api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
-        else:
-            latitude = request.POST['latitude']
-            longitude = request.POST['longitude']
-            api_url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&lang=pt&units=metric'
+         location = request.POST['location']
+         api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
+        
+        elif search_type == 'coordinates':
+         latitude = request.POST['latitude']
+         longitude = request.POST['longitude']
+         api_url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&lang=pt&units=metric'
+
 
         response = requests.get(api_url)
+        if response.status_code == 200:
+             weather_data = response.json()
+        else:
+            messages.error(request, 'Erro ao buscar dados de clima.')
+            return render(request, 'G2app/inicio.html')
         weather_data = response.json()
-        lat =  weather_data.get('coord', {}).get('lat')
-        lon =  weather_data.get('coord', {}).get('lon')
 
-        #Dados de prvisão para os proximos 7 dias
-        forecast_api_url = f'http://api.openweathermap.org/data/2.5/forecast/daily?q={location}&cnt=7&appid={api_key}&lang=pt&units=metric'
+
+        if location:
+            forecast_api_url = f'http://api.openweathermap.org/data/2.5/forecast/daily?q={location}&cnt=7&appid={api_key}&lang=pt&units=metric'
+        else:
+            forecast_api_url = f'http://api.openweathermap.org/data/2.5/forecast/daily?lat={latitude}&lon={longitude}&cnt=7&appid={api_key}&lang=pt&units=metric'
+
         forecast_response = requests.get(forecast_api_url)
         forecast_data = forecast_response.json().get('list', [])
+
 
         #Dados historicos dos ultimos 5 dias 
         historical_data = []
@@ -53,11 +65,18 @@ def inicio(request):
             'description': weather_data['weather'][0].get('description', ''),
             'icon': weather_data['weather'][0].get('icon', ''),
         }
+        if search_type == 'location':
+          location = request.POST['location']
+          local_pesquisa = location  # Guarda o local diretamente
+        elif search_type == 'coordinates':
+          latitude = request.POST['latitude']
+          longitude = request.POST['longitude']
+          local_pesquisa = f"Latitude: {latitude}, Longitude: {longitude}"  # Cria uma string representando as coordenadas
         if response.status_code == 200:
             
             HistoricoPesquisa.objects.create(
                 usuario=request.user,
-                local_pesquisa=location,
+                local_pesquisa=local_pesquisa,
                 resultado_pesquisa=response.text  
         )
         return render(request, 'G2app/inicio.html', context)

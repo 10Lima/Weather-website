@@ -2,7 +2,7 @@
 {% extends 'G2app/index.html' %}  
 {% block content %}
 <div class="weather-form">
-    <h2>Verifique o Clima</h2>
+    <h2>Procurar Clima</h2>
     <form method="post" action="{% url 'inicio' %}">
         {% csrf_token %}
         <div class="form-choice">

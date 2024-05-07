@@ -25,29 +25,50 @@
 
     {% endblock navbar %}
 </header>  
+
 <main>
     {% block content %}{% endblock %}
-    
+
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 
 </main>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchTypeRadios = document.querySelectorAll('input[name="search_type"]');
-            const locationField = document.getElementById('locationField');
-            const coordinatesField = document.getElementById('coordinatesField');
-        
-            searchTypeRadios.forEach(radio => radio.addEventListener('change', function() {
-                if (this.value === 'location') {
-                    locationField.style.display = '';
-                    coordinatesField.style.display = 'none';
-                } else {
-                    locationField.style.display = 'none';
-                    coordinatesField.style.display = '';
-                }
-            }));
-        });
+       document.addEventListener('DOMContentLoaded', function() {
+    const searchTypeRadios = document.querySelectorAll('input[name="search_type"]');
+    const locationField = document.getElementById('locationField');
+    const coordinatesField = document.getElementById('coordinatesField');
+    const locationInput = locationField.querySelector('input');
+    const latitudeInput = coordinatesField.querySelector('input[name="latitude"]');
+    const longitudeInput = coordinatesField.querySelector('input[name="longitude"]');
+
+    function updateFields() {
+        if (document.querySelector('input[name="search_type"]:checked').value === 'location') {
+            locationField.style.display = '';
+            coordinatesField.style.display = 'none';
+            locationInput.required = true;
+            latitudeInput.required = false;
+            longitudeInput.required = false;
+        } else {
+            locationField.style.display = 'none';
+            coordinatesField.style.display = '';
+            locationInput.required = false;
+            latitudeInput.required = true;
+            longitudeInput.required = true;
+        }
+    }
+
+    searchTypeRadios.forEach(radio => radio.addEventListener('change', updateFields));
+    updateFields();  // Chamada inicial para definir o estado correto ao carregar a página
+});
+
         </script>
         
 </body>
