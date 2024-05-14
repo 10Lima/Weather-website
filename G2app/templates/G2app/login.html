@@ -13,13 +13,22 @@
       
       <input type="submit" value="Submit" />
     </form>
+    <p class="para-2">
+        Não tens conta? <a href="{% url 'signup' %}">Cria aqui</a>
+    </p>
+    <p class="para-2">
+        <a href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
+    </p>
   </div>
-  <p class="para-2">
-    Não tens conta? <a href="{% url 'signup' %}">Cria aqui</a>
-  </p>
   {% if form.errors %}
     <div class="error-messages">
-        {{ form.errors }}
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
     </div>
-{% endif %}
+  {% endif %}
 {% endblock %}

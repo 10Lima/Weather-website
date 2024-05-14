@@ -1,6 +1,6 @@
 <!--index.html-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     {% load static %}
     <meta charset="UTF-8" />
@@ -21,6 +21,9 @@
     {% else %}
         <a href="{% url 'login' %}">Login</a>
     {% endif %}
+    {% if user.is_superuser %}
+                <a href="{% url 'admin_view' %}">Área Administração</a>
+            {% endif %}
     </div> 
 
     {% endblock navbar %}

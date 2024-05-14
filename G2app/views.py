@@ -10,6 +10,10 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import User
+from django.shortcuts import render
+
 
 
 #Mostrar os dados metereologicoa quadno se pesquisa o local
@@ -173,3 +177,17 @@ def analyze_weather_data(weather_data):
         alerts.append('Aviso de chuvas fortes')
 
     return alerts
+
+# Verifica se o usuário é superuser (administrador)
+def is_superuser(user):
+    return user.is_superuser
+
+
+def admin_view(request):
+    users = User.objects.all()
+    historico = HistoricoPesquisa.objects.all().order_by('-data_pesquisa')
+    context = {
+        'users': users,
+        'historico': historico
+    }
+    return render(request, 'G2app/admin_view.html', context)

@@ -1,0 +1,34 @@
+{% extends 'G2app/index.html' %}  
+{% block content %}
+<body>
+    <h1>Admin View</h1>
+    <h2>Users</h2>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }} - {{ user.email }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Histórico de Pesquisa</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Local de Pesquisa</th>
+                <th>Data de Pesquisa</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in historico %}
+            <tr>
+                <td>{{ item.usuario.username }}</td>
+                <td>{{ item.local_pesquisa }}</td>
+                <td>{{ item.data_pesquisa }}</td>
+                <td>{{ item.resultado_pesquisa }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+{% endblock %}

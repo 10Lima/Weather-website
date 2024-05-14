@@ -1,376 +1,413 @@
-/*stayle.css*/
 /* Estilo global e body */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif; /* Fonte padrão para consistência */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif; /* Fonte padrão para consistência */
 }
 
 body {
-    background-color: #f4f4f4;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
+  background-color: #f4f4f4;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to right, #6dd5ed, #2193b0);
-    padding: 20px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right, #6dd5ed, #2193b0);
+  padding: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 100;
 }
 
-
 .logo {
-    margin-right: 20px; /* Ajusta o espaço entre o logo e a navbar */
+  margin-right: 20px; /* Ajusta o espaço entre o logo e a navbar */
 }
 
 .logo img {
-    height: 60px; /* Ajusta o tamanho do logo conforme necessário */
-    width: 70px; /* Mantém as proporções da imagem */
+  height: 60px; /* Ajusta o tamanho do logo conforme necessário */
+  width: 70px; /* Mantém as proporções da imagem */
 }
 
 .navbar {
-    display: flex; /* Isso irá alinhar seus links horizontalmente */
-    align-items: center; /* Alinha os itens da navbar verticalmente */
-    z-index: 50;
+  display: flex; /* Isso irá alinhar seus links horizontalmente */
+  align-items: center; /* Alinha os itens da navbar verticalmente */
+  z-index: 50;
 }
 .navbar a {
-    text-decoration: none;
-    color: white;
-    margin: 0 1rem;
-    position: relative;
-    padding: 0.5rem 1rem;
-    transition: color 0.3s;
+  text-decoration: none;
+  color: white;
+  margin: 0 1rem;
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s;
 }
 
 .navbar a:hover,
 .navbar a:focus {
-    color: #ffd700; 
-    transition: color 0.3s;
+  color: #ffd700; 
+  transition: color 0.3s;
 }
 
 .navbar a::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    bottom: 0;
-    left: 0;
-    background-color: #ffd700;
-    visibility: hidden;
-    transform: scaleX(0);
-    transition: all 0.3s ease-in-out 0s;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: #ffd700;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
 }
 
 .navbar a:hover::before,
 .navbar a:focus::before {
-    visibility: visible;
-    transform: scaleX(1);
+  visibility: visible;
+  transform: scaleX(1);
 }
 
 .navbar-brand {
-    font-weight: bold;
-    color: white;
+  font-weight: bold;
+  color: white;
 }
 
 /* Estilização do formulário de procura */
 .weather-form {
-  background-color: white; /* Cor de fundo branca */
-  padding: 2em;
-  margin: 100px auto;
-  border-radius: 10px;
-  width: 50%; /* Largura ajustada para a tela */
-  box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1); /* Sombra no lado esquerdo */
-  text-align: left; /* Alinhamento do texto para a esquerda */
+background-color: white; /* Cor de fundo branca */
+padding: 2em;
+margin: 100px auto;
+border-radius: 10px;
+width: 50%; /* Largura ajustada para a tela */
+box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1); /* Sombra no lado esquerdo */
+text-align: left; /* Alinhamento do texto para a esquerda */
 }
 
-
-
 .weather-form h2 {
-    
-    color: #333;
-    margin-bottom: 1em;
+  color: #333;
+  margin-bottom: 1em;
 }
 
 .form-control {
-  display: flex; /* Torna os controles em linha */
-  align-items: center; /* Alinha verticalmente os elementos */
-  margin-bottom: 1em;
+display: flex; /* Torna os controles em linha */
+align-items: center; /* Alinha verticalmente os elementos */
+margin-bottom: 1em;
 }
 
 .form-control input[type="text"],
 .form-control button {
-    flex-grow: 1; /* Faz com que os inputs e botão cresçam de forma flexível */
-    margin-left: 10px; /* Espaçamento à esquerda para separar dos rótulos */
+  flex-grow: 1; /* Faz com que os inputs e botão cresçam de forma flexível */
+  margin-left: 10px; /* Espaçamento à esquerda para separar dos rótulos */
 }
 
 .form-control input[type="text"] {
-  padding: 10px;
-  border: 1px solid #ccc; /* Borda para os campos de texto */
+padding: 10px;
+border: 1px solid #ccc; /* Borda para os campos de texto */
 }
 
 .form-control button {
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+padding: 10px;
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
 }
 
 .form-control button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* Estilo para os controles do formulário e alinhamento dos botões de rádio */
 .form-choice {
-  display: flex;
-  align-items: center; /* Alinha os botões de rádio com os rótulos */
-  margin-bottom: 20px; /* Espaço antes do próximo controle */
+display: flex;
+align-items: center; /* Alinha os botões de rádio com os rótulos */
+margin-bottom: 20px; /* Espaço antes do próximo controle */
 }
-
 
 .form-choice label {
-  margin-left: 10px; /* Espaçamento entre o botão de rádio e o rótulo */
-  margin-right: 30px; /* Espaçamento entre diferentes opções */
+margin-left: 10px; /* Espaçamento entre o botão de rádio e o rótulo */
+margin-right: 30px; /* Espaçamento entre diferentes opções */
 }
-
 
 /* Adiciona espaço abaixo dos campos de entrada para não ficarem muito juntos */
 .form-control input {
-  margin-bottom: 10px; /* Espaçamento adicional abaixo dos inputs */
+margin-bottom: 10px; /* Espaçamento adicional abaixo dos inputs */
 }
+
 /*metereologia atual*/
 .weather-results {
-  background-color: #333;
-  color: white;
-  border-radius: 10px;
-  padding: 20px;
-  width: 300px; /* Ajuste a largura conforme necessário */
-  margin: 100px auto; /* Centraliza no meio da página */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+background-color: #333;
+color: white;
+border-radius: 10px;
+padding: 20px;
+width: 300px; /* Ajuste a largura conforme necessário */
+margin: 100px auto; /* Centraliza no meio da página */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .weather-results h2 {
-  text-align: center;
-  color: #ffd700; /* Cor amarela para o título */
-  margin-bottom: 20px;
+text-align: center;
+color: #ffd700; /* Cor amarela para o título */
+margin-bottom: 20px;
 }
 
 .current-weather p {
-  margin: 10px 0;
-  font-size: 24px; /* Tamanho do texto para a temperatura */
-  text-align: center;
+margin: 10px 0;
+font-size: 24px; /* Tamanho do texto para a temperatura */
+text-align: center;
 }
 
 .current-weather img {
-  display: block;
-  margin: 0 auto; /* Centraliza o ícone do clima */
-  width: 50px; /* Ajuste conforme necessário */
-  height: 50px;
+display: block;
+margin: 0 auto; /* Centraliza o ícone do clima */
+width: 50px; /* Ajuste conforme necessário */
+height: 50px;
 }
 
 .weather-details p {
-  text-align: center;
-  margin: 5px 0;
+text-align: center;
+margin: 5px 0;
 }
 
 /* Estilo adicional para detalhes como pressão, umidade, etc. */
 .weather-details {
-  border-top: 1px solid #555; /* Linha divisória */
-  padding-top: 10px;
+border-top: 1px solid #555; /* Linha divisória */
+padding-top: 10px;
 }
 
-
-/* Caixas de login e sigin*/
+/* Caixas de login e signup */
 .signup-box {
-    width: 360px;
-    height: 620px;
-    margin: auto;
-    background-color: white;
-    border-radius: 3px;
-    margin-top: 200px;
+  width: 360px;
+  height: 620px;
+  margin: auto;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
-  }
-  
-  .login-box {
-    width: 360px;
-    height: 280px;
-    margin: auto;
-    border-radius: 3px;
-    background-color: white;
-    margin-top: 200px;
-  }
-  
+.login-box {
+  width: 360px;
+  height: 320px;
+  margin: auto;
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
-  form {
-    width: 300px;
-    margin-left: 20px;
-  }
-  
-  form label {
-    display: flex;
-    margin-top: 20px;
-    font-size: 18px;
-  }
-  
-  form input {
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border: 1px solid gray;
-    border-radius: 6px;
-    outline: none;
-  }
-  input[type="button"] {
-    width: 320px;
-    height: 35px;
-    margin-top: 20px;
-    border: none;
-    background-color: #49c1a2;
-    color: white;
-    font-size: 18px;
-  }
-  p {
-    text-align: center;
-    padding-top: 20px;
-    font-size: 15px;
-  }
-  .para-2 {
-    text-align: center;
-    color: rgb(0, 0, 0);
-    font-size: 15px;
-    margin-top: -10px;
-  }
-  .container {
-    max-width: 1000px; /* Ajuste a largura conforme necessário */
-    margin: auto;
-    padding-top: 120px; /* Ajuste para não ficar sob o header */
-    background-color: #f4f4f4;
-    z-index: 50;
+form {
+  width: 100%;
+  margin: auto;
+}
+
+form label {
+  display: block;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border: 1px solid gray;
+  border-radius: 6px;
+  outline: none;
+  margin-top: 5px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  border: none;
+  background-color: #49c1a2;
+  color: white;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #37a08e;
+}
+
+p {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 15px;
+}
+
+.para-2 {
+  text-align: center;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  margin-top: -10px;
+  margin-bottom: 20px; /* Adiciona espaço abaixo do texto */
+}
+
+.error-messages {
+  background-color: #ffdddd;
+  border-left: 6px solid #f44336;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.error-messages li {
+  margin: 5px 0;
+}
+
+.container {
+  max-width: 1000px; /* Ajuste a largura conforme necessário */
+  margin: auto;
+  padding-top: 120px; /* Ajuste para não ficar sob o header */
+  background-color: #f4f4f4;
+  z-index: 50;
 }
 
 .main-body {
-    padding: 15px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
 
 .list-group-item {
-    border: none; /* Remove as bordas dos itens do grupo de listas */
+  border: none; /* Remove as bordas dos itens do grupo de listas */
 }
 
 .list-group-flush .list-group-item {
-    border-right-width: 0;
-    border-left-width: 0; /* Estiliza bordas caso queira manter */
+  border-right-width: 0;
+  border-left-width: 0; /* Estiliza bordas caso queira manter */
 }
 
 /* Estilo para o título do histórico */
 .card-body h4 {
-    color: #333;
-    margin-bottom: 10px;
-    text-align: left;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
-/*estilo de caixa de pervisões e hitorico*/
-/* Reset básico para garantir consistência entre navegadores */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    line-height: 1.6;
-  }
-  
-  .weather-forecast,
-  .weather-history {
-    max-width: 800px; /* Ajuste a largura como necessário */
-    margin: 20px auto;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .weather-forecast h2, 
-  .weather-history h2 {
-    border-bottom: 2px solid #2193b0;
-    color: #2193b0;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  table th,
-  table td {
-    text-align: left;
-    padding: 12px;
-    border: 1px solid #ddd;
-  }
-  
-  table th {
-    background-color: #2193b0;
-    color: white;
-  }
-  
-  /* Estilizando os cabeçalhos do dia da semana */
-  .day-header {
-    background-color: #2193b0;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  /* Estilizando os detalhes do clima diário */
-  .day-details {
-    background-color: #f9f9f9;
-    border-left: 5px solid #2193b0;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 8px;
-  }
-  
-  .day-details div {
-    margin-bottom: 10px;
-  }
-  
-  /* Estilo para o ícone do clima */
-  .weather-icon {
-    width: 50px; /* Ajuste conforme o necessário */
-    height: 50px; /* Ajuste conforme o necessário */
-  }
-  
-  /* Estilos para a seção de dados como vento, UV, etc. */
-  .data-section {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .data-item {
-    background-color: #e3f2fd;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
+/* Estilo de caixa de previsões e histórico */
+.weather-forecast,
+.weather-history {
+  max-width: 800px; /* Ajuste a largura como necessário */
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.weather-forecast h2, 
+.weather-history h2 {
+  border-bottom: 2px solid #2193b0;
+  color: #2193b0;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #2193b0;
+  color: white;
+}
+
+/* Estilizando os cabeçalhos do dia da semana */
+.day-header {
+  background-color: #2193b0;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilizando os detalhes do clima diário */
+.day-details {
+  background-color: #f9f9f9;
+  border-left: 5px solid #2193b0;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.day-details div {
+  margin-bottom: 10px;
+}
+
+/* Estilo para o ícone do clima */
+.weather-icon {
+  width: 50px; /* Ajuste conforme o necessário */
+  height: 50px; /* Ajuste conforme o necessário */
+}
+
+/* Estilos para a seção de dados como vento, UV, etc. */
+.data-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data-item {
+  background-color: #e3f2fd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Estilo para as caixas de recuperação de senha */
+.reset-box {
+  width: 360px;
+  margin: auto;
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.reset-box h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.message-box {
+  width: 360px;
+  margin: auto;
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.message-box h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
