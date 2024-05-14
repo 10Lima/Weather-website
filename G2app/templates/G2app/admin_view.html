@@ -1,34 +1,35 @@
-{% extends 'G2app/index.html' %}  
-{% block content %}
-<body>
-    <h1>Admin View</h1>
-    <h2>Users</h2>
-    <ul>
-        {% for user in users %}
-            <li>{{ user.username }} - {{ user.email }}</li>
-        {% endfor %}
-    </ul>
+<!-- templates/G2app/admin_view.html -->
+{% extends 'G2app/index.html' %}
 
-    <h2>Histórico de Pesquisa</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Usuário</th>
-                <th>Local de Pesquisa</th>
-                <th>Data de Pesquisa</th>
-                <th>Resultado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in historico %}
-            <tr>
-                <td>{{ item.usuario.username }}</td>
-                <td>{{ item.local_pesquisa }}</td>
-                <td>{{ item.data_pesquisa }}</td>
-                <td>{{ item.resultado_pesquisa }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+{% block content %}
+<div class="admin-view">
+    <h1>Área de Administração</h1>
+    {% for usuario, historico in usuarios_historico.items %}
+    <div class="user-card">
+        <h2>{{ usuario.username }}</h2>
+        <p>Email: {{ usuario.email }}</p>
+        <div class="user-history">
+            <h3>Histórico de Pesquisa</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Local</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in historico %}
+                    <tr>
+                        <td>{{ item.data_pesquisa }}</td>
+                        <td>{{ item.local_pesquisa }}</td>
+                        <td>{{ item.resultado_pesquisa }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

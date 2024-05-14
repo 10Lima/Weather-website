@@ -40,6 +40,7 @@ header {
   align-items: center; /* Alinha os itens da navbar verticalmente */
   z-index: 50;
 }
+
 .navbar a {
   text-decoration: none;
   color: white;
@@ -81,13 +82,13 @@ header {
 
 /* Estilização do formulário de procura */
 .weather-form {
-background-color: white; /* Cor de fundo branca */
-padding: 2em;
-margin: 100px auto;
-border-radius: 10px;
-width: 50%; /* Largura ajustada para a tela */
-box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1); /* Sombra no lado esquerdo */
-text-align: left; /* Alinhamento do texto para a esquerda */
+  background-color: white; /* Cor de fundo branca */
+  padding: 2em;
+  margin: 100px auto;
+  border-radius: 10px;
+  width: 50%; /* Largura ajustada para a tela */
+  box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1); /* Sombra no lado esquerdo */
+  text-align: left; /* Alinhamento do texto para a esquerda */
 }
 
 .weather-form h2 {
@@ -96,9 +97,9 @@ text-align: left; /* Alinhamento do texto para a esquerda */
 }
 
 .form-control {
-display: flex; /* Torna os controles em linha */
-align-items: center; /* Alinha verticalmente os elementos */
-margin-bottom: 1em;
+  display: flex; /* Torna os controles em linha */
+  align-items: center; /* Alinha verticalmente os elementos */
+  margin-bottom: 1em;
 }
 
 .form-control input[type="text"],
@@ -108,17 +109,17 @@ margin-bottom: 1em;
 }
 
 .form-control input[type="text"] {
-padding: 10px;
-border: 1px solid #ccc; /* Borda para os campos de texto */
+  padding: 10px;
+  border: 1px solid #ccc; /* Borda para os campos de texto */
 }
 
 .form-control button {
-padding: 10px;
-background-color: #007bff;
-color: white;
-border: none;
-border-radius: 5px;
-cursor: pointer;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .form-control button:hover {
@@ -127,60 +128,60 @@ cursor: pointer;
 
 /* Estilo para os controles do formulário e alinhamento dos botões de rádio */
 .form-choice {
-display: flex;
-align-items: center; /* Alinha os botões de rádio com os rótulos */
-margin-bottom: 20px; /* Espaço antes do próximo controle */
+  display: flex;
+  align-items: center; /* Alinha os botões de rádio com os rótulos */
+  margin-bottom: 20px; /* Espaço antes do próximo controle */
 }
 
 .form-choice label {
-margin-left: 10px; /* Espaçamento entre o botão de rádio e o rótulo */
-margin-right: 30px; /* Espaçamento entre diferentes opções */
+  margin-left: 10px; /* Espaçamento entre o botão de rádio e o rótulo */
+  margin-right: 30px; /* Espaçamento entre diferentes opções */
 }
 
 /* Adiciona espaço abaixo dos campos de entrada para não ficarem muito juntos */
 .form-control input {
-margin-bottom: 10px; /* Espaçamento adicional abaixo dos inputs */
+  margin-bottom: 10px; /* Espaçamento adicional abaixo dos inputs */
 }
 
-/*metereologia atual*/
+/* Metereologia atual */
 .weather-results {
-background-color: #333;
-color: white;
-border-radius: 10px;
-padding: 20px;
-width: 300px; /* Ajuste a largura conforme necessário */
-margin: 100px auto; /* Centraliza no meio da página */
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #333;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px; /* Ajuste a largura conforme necessário */
+  margin: 100px auto; /* Centraliza no meio da página */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .weather-results h2 {
-text-align: center;
-color: #ffd700; /* Cor amarela para o título */
-margin-bottom: 20px;
+  text-align: center;
+  color: #ffd700; /* Cor amarela para o título */
+  margin-bottom: 20px;
 }
 
 .current-weather p {
-margin: 10px 0;
-font-size: 24px; /* Tamanho do texto para a temperatura */
-text-align: center;
+  margin: 10px 0;
+  font-size: 24px; /* Tamanho do texto para a temperatura */
+  text-align: center;
 }
 
 .current-weather img {
-display: block;
-margin: 0 auto; /* Centraliza o ícone do clima */
-width: 50px; /* Ajuste conforme necessário */
-height: 50px;
+  display: block;
+  margin: 0 auto; /* Centraliza o ícone do clima */
+  width: 50px; /* Ajuste conforme necessário */
+  height: 50px;
 }
 
 .weather-details p {
-text-align: center;
-margin: 5px 0;
+  text-align: center;
+  margin: 5px 0;
 }
 
 /* Estilo adicional para detalhes como pressão, umidade, etc. */
 .weather-details {
-border-top: 1px solid #555; /* Linha divisória */
-padding-top: 10px;
+  border-top: 1px solid #555; /* Linha divisória */
+  padding-top: 10px;
 }
 
 /* Caixas de login e signup */
@@ -410,4 +411,64 @@ table th {
 .message-box h1 {
   color: #333;
   margin-bottom: 20px;
+}
+
+//* Estilo para a área admin_view */
+.admin-view {
+  max-width: 1000px;
+  margin: 100px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-view h1 {
+  color: #2193b0;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid #2193b0;
+  padding-bottom: 10px;
+}
+
+.user-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.user-card h2 {
+  margin-bottom: 10px;
+}
+
+.user-card p {
+  margin: 5px 0;
+}
+
+.user-history {
+  margin-top: 20px;
+}
+
+.user-history h3 {
+  margin-bottom: 10px;
+  color: #2193b0;
+}
+
+.user-history table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.user-history table th,
+.user-history table td {
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.user-history table th {
+  background-color: #2193b0;
+  color: white;
 }

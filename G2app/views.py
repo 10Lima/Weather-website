@@ -184,10 +184,14 @@ def is_superuser(user):
 
 
 def admin_view(request):
+    usuarios_historico = {}
     users = User.objects.all()
-    historico = HistoricoPesquisa.objects.all().order_by('-data_pesquisa')
+    
+    for user in users:
+        historico = HistoricoPesquisa.objects.filter(usuario=user).order_by('-data_pesquisa')
+        usuarios_historico[user] = historico
+
     context = {
-        'users': users,
-        'historico': historico
+        'usuarios_historico': usuarios_historico
     }
     return render(request, 'G2app/admin_view.html', context)
