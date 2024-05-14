@@ -3,7 +3,7 @@
 {% block content %}
 <div class="weather-form">
     <h2>Procurar Clima</h2>
-    <form method="post" action="{% url 'inicio' %}">
+       <form method="post" action="{% url 'inicio' %}">
         {% csrf_token %}
         <div class="form-choice">
             <input type="radio" id="byLocation" name="search_type" value="location" checked>
@@ -26,14 +26,19 @@
 
 {% if location %}
 <div class="weather-results">
-    <p>Localização: {{ location }}</p>
-    <p>Temperatura Atual: {{ temperature }}°C</p>
-    <p>Temperatura Máxima: {{ temp_max }}°C</p>
-    <p>Temperatura Mínima: {{ temp_min }}°C</p>
-    <p>Pressão: {{ pressure }} hPa</p>
-    <p>Chuva na Última Hora: {{ rain }}mm</p>
-    <p>Condições: {{ description }}</p>
-    <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
+    <h2>Condições Atuais em {{ location }}</h2>
+    <div class="current-weather">
+        <p><strong>{{ temperature }}°C</strong></p>
+        <p>{{ description | title }}</p>
+        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Ícone do Clima">
+    </div>
+    <div class="weather-details"></div>
+        <p>Temperatura Máxima: {{ temp_max }}°C</p>
+        <p>Temperatura Mínima: {{ temp_min }}°C</p>
+        <p>Pressão: {{ pressure }} hPa</p>
+        <p>Chuva na Última Hora: {{ rain }}mm</p>
+        <p>Vento: {{ wind_speed }} m/s, {{ wind_dir }}</p>
+    </div>
 </div>
 <div class="weather-forecast">
     <h2>Previsão para os Próximos 7 Dias</h2>
@@ -49,7 +54,7 @@
         <tbody>
             {% for day in forecast_data %}
             <tr>
-                <td>{{ day.dt | date:"d/m/Y" }}</td>
+                <td>{{ day.dt  }}</td>
                 <td>{{ day.temp.max }}°C</td>
                 <td>{{ day.temp.min }}°C</td>
                 <td>{{ day.weather.0.description | title }}</td>
@@ -74,7 +79,7 @@
         <tbody>
             {% for day in historical_data %}
             <tr>
-                <td>{{ day.dt | date:"d/m/Y" }}</td>
+                <td>{{ day.dt }}</td>
                 <td>{{ day.temp }}°C</td>
                 <td>{{ day.weather.0.description | title }}</td>
             </tr>

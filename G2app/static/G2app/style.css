@@ -83,14 +83,15 @@ header {
 
 /* Estilização do formulário de procura */
 .weather-form {
-   
-    padding: 2em;
-    margin: 100px auto; /* Aumenta a margem superior para afastar do cabeçalho */
-    border-radius: 10px;
-   text-align: lef; /* Centraliza o texto dentro do formulário */
-    width: 100%; /* Define uma largura para o formulário */
-  
+  background-color: white; /* Cor de fundo branca */
+  padding: 2em;
+  margin: 100px auto;
+  border-radius: 10px;
+  width: 50%; /* Largura ajustada para a tela */
+  box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1); /* Sombra no lado esquerdo */
+  text-align: left; /* Alinhamento do texto para a esquerda */
 }
+
 
 
 .weather-form h2 {
@@ -100,43 +101,92 @@ header {
 }
 
 .form-control {
-    margin-bottom: 1em;
-    display: flex;
-    justify-content: center; 
+  display: flex; /* Torna os controles em linha */
+  align-items: center; /* Alinha verticalmente os elementos */
+  margin-bottom: 1em;
 }
-.form-control input,
+
+.form-control input[type="text"],
 .form-control button {
-    width: 90%; /* Controla a largura do input e do botão */
-    padding: 10px;
-    margin: 5px; /* Ajusta a margem para um espaçamento uniforme */
+    flex-grow: 1; /* Faz com que os inputs e botão cresçam de forma flexível */
+    margin-left: 10px; /* Espaçamento à esquerda para separar dos rótulos */
+}
+
+.form-control input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc; /* Borda para os campos de texto */
 }
 
 .form-control button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
 .form-control button:hover {
     background-color: #0056b3;
 }
+
 /* Estilo para os controles do formulário e alinhamento dos botões de rádio */
 .form-choice {
   display: flex;
-  align-items: center; /* Alinha verticalmente os itens */
-  justify-content: start; /* Alinha horizontalmente ao começo */
-  margin-bottom: 30px; /* Espaçamento entre as opções e outros campos */
+  align-items: center; /* Alinha os botões de rádio com os rótulos */
+  margin-bottom: 20px; /* Espaço antes do próximo controle */
 }
 
+
 .form-choice label {
-  margin-left: 10px; /* Espaçamento entre o botão de rádio e o texto */
-  margin-right: 50px; /* Espaçamento entre os conjuntos de botão de rádio e texto */
+  margin-left: 10px; /* Espaçamento entre o botão de rádio e o rótulo */
+  margin-right: 30px; /* Espaçamento entre diferentes opções */
 }
+
 
 /* Adiciona espaço abaixo dos campos de entrada para não ficarem muito juntos */
 .form-control input {
   margin-bottom: 10px; /* Espaçamento adicional abaixo dos inputs */
+}
+/*metereologia atual*/
+.weather-results {
+  background-color: #333;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px; /* Ajuste a largura conforme necessário */
+  margin: 100px auto; /* Centraliza no meio da página */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-results h2 {
+  text-align: center;
+  color: #ffd700; /* Cor amarela para o título */
+  margin-bottom: 20px;
+}
+
+.current-weather p {
+  margin: 10px 0;
+  font-size: 24px; /* Tamanho do texto para a temperatura */
+  text-align: center;
+}
+
+.current-weather img {
+  display: block;
+  margin: 0 auto; /* Centraliza o ícone do clima */
+  width: 50px; /* Ajuste conforme necessário */
+  height: 50px;
+}
+
+.weather-details p {
+  text-align: center;
+  margin: 5px 0;
+}
+
+/* Estilo adicional para detalhes como pressão, umidade, etc. */
+.weather-details {
+  border-top: 1px solid #555; /* Linha divisória */
+  padding-top: 10px;
 }
 
 

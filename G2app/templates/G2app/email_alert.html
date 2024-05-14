@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alerta Metereologica</title>
+</head>
+<body>
+    <h1>>Alerta Metereologica</h1>
+    <p>Localização: {{ weather_data.name }}</p>
+    <p>Temperatura: {{ weather_data.main.temp }} °C</p>
+    <p>Descrição: {{ weather_data.weather.0.description }}</p>
+    <h2>Alerta</h2>
+    <ul>
+        {% for alert in alerts %}
+            <li>{{ alert }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -4,6 +4,8 @@ atualizar ficheiros no reposito(escrever estes comandos na bash do git)
     git add .
     git commit -m "O que fizeste ex:(atualização no codigo)"
     git push
+    
+ necessario instalar para alertas funcionar : pip install celery redis
 
 Mudanças ao vivo em cmd 
 browser-sync start --proxy localhost:8000 --files "C:\Users\bruno\Desktop\utad\lab 2\projeto 2\app django\meteorologia"
