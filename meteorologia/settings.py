@@ -1,3 +1,4 @@
+#settings.py
 """
 Django settings for meteorologia project.
 
@@ -41,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    "G2app"
-  
+    'G2app',
+    'django_celery_beat',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -131,15 +133,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # meteorologia/settings.py
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
 
-CELERY_BEAT_SCHEDULE = {
-    'check-weather-alerts-every-hour': {
-        'task': 'G2app.tasks.check_weather_alerts',
-        'schedule': crontab(minute=0, hour='*/1'),  # Executa a cada hora
-    },
-}
-# settings.py
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+from .celery import app as celery_app
+
+__all__ = ('celery_app',)
+
+# Configurações de e-mail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
