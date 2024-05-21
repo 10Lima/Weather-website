@@ -148,3 +148,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'forecastnow49@gmail.com' 
 EMAIL_HOST_PASSWORD = 'dpui wapq rmga zeyn'  
+
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyANVnlD8qgnSzhL7UWTSmBPlaisCb37K-c'

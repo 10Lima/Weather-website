@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
-
+from django.conf import settings
 
 def inicio(request):
     if request.method == 'POST':
@@ -65,6 +65,12 @@ def inicio(request):
         
         alerts = analyze_weather_data(weather_data)
 
+         # Gerar a URL do mapa
+        google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
+        map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={latitude},{longitude}&zoom=12&size=600x400&markers=color:red%7C{latitude},{longitude}&key={google_maps_api_key}"
+        print(map_url)
+
+
         context = {
             'forecast_data': forecast_data,
             'historical_data': historical_data,
@@ -77,6 +83,7 @@ def inicio(request):
             'description': weather_data['weather'][0].get('description', ''),
             'icon': weather_data['weather'][0].get('icon', ''),
             'alerts': alerts,
+            'map_url': map_url,
         }
         if alerts:
             send_alert_email(request.user.email, weather_data, alerts)

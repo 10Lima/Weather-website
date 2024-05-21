@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif; /* Fonte padrão para consistência */
+  font-family: 'Arial', sans-serif;
 }
 
 body {
@@ -27,17 +27,17 @@ header {
 }
 
 .logo {
-  margin-right: 20px; /* Ajusta o espaço entre o logo e a navbar */
+  margin-right: 20px;
 }
 
 .logo img {
-  height: 60px; /* Ajusta o tamanho do logo conforme necessário */
-  width: 70px; /* Mantém as proporções da imagem */
+  height: 60px;
+  width: 70px;
 }
 
 .navbar {
-  display: flex; /* Isso irá alinhar seus links horizontalmente */
-  align-items: center; /* Alinha os itens da navbar verticalmente */
+  display: flex;
+  align-items: center;
   z-index: 50;
 }
 
@@ -52,7 +52,7 @@ header {
 
 .navbar a:hover,
 .navbar a:focus {
-  color: #ffd700; 
+  color: #ffd700;
   transition: color 0.3s;
 }
 
@@ -80,15 +80,24 @@ header {
   color: white;
 }
 
+/* Container para formulário de pesquisa e mapa */
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 100px auto;
+  padding: 2em;
+  max-width: 1200px;
+}
+
 /* Estilização do formulário de procura */
 .weather-form {
-  background-color: white; /* Cor de fundo branca */
+  background-color: white;
   padding: 2em;
-  margin: 100px auto;
   border-radius: 10px;
-  width: 50%; /* Largura ajustada para a tela */
-  box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1); /* Sombra no lado esquerdo */
-  text-align: left; /* Alinhamento do texto para a esquerda */
+  width: 45%;
+  box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 
 .weather-form h2 {
@@ -97,20 +106,20 @@ header {
 }
 
 .form-control {
-  display: flex; /* Torna os controles em linha */
-  align-items: center; /* Alinha verticalmente os elementos */
+  display: flex;
+  align-items: center;
   margin-bottom: 1em;
 }
 
 .form-control input[type="text"],
 .form-control button {
-  flex-grow: 1; /* Faz com que os inputs e botão cresçam de forma flexível */
-  margin-left: 10px; /* Espaçamento à esquerda para separar dos rótulos */
+  flex-grow: 1;
+  margin-left: 10px;
 }
 
 .form-control input[type="text"] {
   padding: 10px;
-  border: 1px solid #ccc; /* Borda para os campos de texto */
+  border: 1px solid #ccc;
 }
 
 .form-control button {
@@ -126,21 +135,36 @@ header {
   background-color: #0056b3;
 }
 
-/* Estilo para os controles do formulário e alinhamento dos botões de rádio */
 .form-choice {
   display: flex;
-  align-items: center; /* Alinha os botões de rádio com os rótulos */
-  margin-bottom: 20px; /* Espaço antes do próximo controle */
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .form-choice label {
-  margin-left: 10px; /* Espaçamento entre o botão de rádio e o rótulo */
-  margin-right: 30px; /* Espaçamento entre diferentes opções */
+  margin-left: 10px;
+  margin-right: 30px;
 }
 
-/* Adiciona espaço abaixo dos campos de entrada para não ficarem muito juntos */
 .form-control input {
-  margin-bottom: 10px; /* Espaçamento adicional abaixo dos inputs */
+  margin-bottom: 10px;
+}
+
+/* Estilização do mapa */
+.weather-map {
+  width: 50%;
+  text-align: center;
+}
+
+.weather-map h2 {
+  color: #333;
+  margin-bottom: 1em;
+}
+
+.weather-map img {
+  width: 70%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Metereologia atual */
@@ -149,27 +173,27 @@ header {
   color: white;
   border-radius: 10px;
   padding: 20px;
-  width: 300px; /* Ajuste a largura conforme necessário */
-  margin: 100px auto; /* Centraliza no meio da página */
+  width: 300px;
+  margin: 20px auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .weather-results h2 {
   text-align: center;
-  color: #ffd700; /* Cor amarela para o título */
+  color: #ffd700;
   margin-bottom: 20px;
 }
 
 .current-weather p {
   margin: 10px 0;
-  font-size: 24px; /* Tamanho do texto para a temperatura */
+  font-size: 24px;
   text-align: center;
 }
 
 .current-weather img {
   display: block;
-  margin: 0 auto; /* Centraliza o ícone do clima */
-  width: 50px; /* Ajuste conforme necessário */
+  margin: 0 auto;
+  width: 50px;
   height: 50px;
 }
 
@@ -178,9 +202,8 @@ header {
   margin: 5px 0;
 }
 
-/* Estilo adicional para detalhes como pressão, umidade, etc. */
 .weather-details {
-  border-top: 1px solid #555; /* Linha divisória */
+  border-top: 1px solid #555;
   padding-top: 10px;
 }
 
@@ -255,7 +278,7 @@ p {
   color: rgb(0, 0, 0);
   font-size: 15px;
   margin-top: -10px;
-  margin-bottom: 20px; /* Adiciona espaço abaixo do texto */
+  margin-bottom: 20px;
 }
 
 .error-messages {
@@ -270,9 +293,9 @@ p {
 }
 
 .container {
-  max-width: 1000px; /* Ajuste a largura conforme necessário */
+  max-width: 1000px;
   margin: auto;
-  padding-top: 120px; /* Ajuste para não ficar sob o header */
+  padding-top: 120px;
   background-color: #f4f4f4;
   z-index: 50;
 }
@@ -285,25 +308,23 @@ p {
 }
 
 .list-group-item {
-  border: none; /* Remove as bordas dos itens do grupo de listas */
+  border: none;
 }
 
 .list-group-flush .list-group-item {
   border-right-width: 0;
-  border-left-width: 0; /* Estiliza bordas caso queira manter */
+  border-left-width: 0;
 }
 
-/* Estilo para o título do histórico */
 .card-body h4 {
   color: #333;
   margin-bottom: 10px;
   text-align: left;
 }
 
-/* Estilo de caixa de previsões e histórico */
 .weather-forecast,
 .weather-history {
-  max-width: 800px; /* Ajuste a largura como necessário */
+  max-width: 800px;
   margin: 20px auto;
   background: #ffffff;
   padding: 20px;
@@ -337,7 +358,6 @@ table th {
   color: white;
 }
 
-/* Estilizando os cabeçalhos do dia da semana */
 .day-header {
   background-color: #2193b0;
   color: white;
@@ -349,7 +369,6 @@ table th {
   align-items: center;
 }
 
-/* Estilizando os detalhes do clima diário */
 .day-details {
   background-color: #f9f9f9;
   border-left: 5px solid #2193b0;
@@ -362,13 +381,11 @@ table th {
   margin-bottom: 10px;
 }
 
-/* Estilo para o ícone do clima */
 .weather-icon {
-  width: 50px; /* Ajuste conforme o necessário */
-  height: 50px; /* Ajuste conforme o necessário */
+  width: 50px;
+  height: 50px;
 }
 
-/* Estilos para a seção de dados como vento, UV, etc. */
 .data-section {
   display: flex;
   justify-content: space-between;
@@ -380,7 +397,6 @@ table th {
   border-radius: 5px;
 }
 
-/* Estilo para as caixas de recuperação de senha */
 .reset-box {
   width: 360px;
   margin: auto;
@@ -413,7 +429,6 @@ table th {
   margin-bottom: 20px;
 }
 
-/* Estilo para a área admin_view */
 .admin-view {
   max-width: 1000px;
   margin: 100px auto;

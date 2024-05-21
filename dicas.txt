@@ -1,4 +1,5 @@
- python manage.py runserver ( rodar o servidor)
+venv\Scripts\activate (rodar maquina virtual)
+  python manage.py runserver   ( rodar o servidor)
     
 atualizar ficheiros no reposito(escrever estes comandos na bash do git)
     git add .
@@ -9,3 +10,4 @@ atualizar ficheiros no reposito(escrever estes comandos na bash do git)
 
 Mudanças ao vivo em cmd 
 browser-sync start --proxy localhost:8000 --files "C:\Users\bruno\Desktop\utad\lab 2\projeto 2\app django\meteorologia"
+
