@@ -12,6 +12,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 def inicio(request):
     if request.method == 'POST':
@@ -154,7 +156,15 @@ def admin_view(request):
     }
     return render(request, 'G2app/admin_view.html', context)
 
+def logout(request):
+    # Remover o usuário da sessão
+    if 'user' in request.session:
+     del request.session[' user']  
+    
+    # Redirecionar para a página de login ou página inicial
+    return redirect('signup')
 
+# G2app/tasks.py
 def fetch_weather_data(location=None, latitude=None, longitude=None):
     api_key = '941376db0bf38f9867c309281b11da60'
     
