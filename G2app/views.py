@@ -1,7 +1,7 @@
 # views.py
 from django.shortcuts import render, redirect
 import requests
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import SignUpForm
 from .models import HistoricoPesquisa
 import json
@@ -31,24 +31,20 @@ def inicio(request):
             longitude = request.POST['longitude']
             api_url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&lang=pt&units=metric'
 
-
         response = requests.get(api_url)
         if response.status_code == 200:
             weather_data = response.json()
+            print(weather_data)  # Adicione esta linha para depuração
         else:
             messages.error(request, 'Erro ao buscar dados de clima.')
             return render(request, 'G2app/inicio.html')
         
-        weather_data = response.json()
-
         latitude = weather_data.get('coord', {}).get('lat')
         longitude = weather_data.get('coord', {}).get('lon')
 
         forecast_api_url = f'http://api.openweathermap.org/data/2.5/forecast/daily?lat={latitude}&lon={longitude}&cnt=7&appid={api_key}&lang=pt&units=metric'
-
         forecast_response = requests.get(forecast_api_url)
         forecast_data = forecast_response.json().get('list', [])
-
 
         # Dados históricos dos últimos 5 dias 
         historical_data = []
@@ -67,11 +63,10 @@ def inicio(request):
         
         alerts = analyze_weather_data(weather_data)
 
-         # Gerar a URL do mapa
+        # Gerar a URL do mapa com marcador vermelho
         google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
         map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={latitude},{longitude}&zoom=12&size=600x400&markers=color:red%7C{latitude},{longitude}&key={google_maps_api_key}"
         print(map_url)
-
 
         context = {
             'forecast_data': forecast_data,
@@ -85,7 +80,7 @@ def inicio(request):
             'description': weather_data['weather'][0].get('description', ''),
             'icon': weather_data['weather'][0].get('icon', ''),
             'alerts': alerts,
-            'map_url': map_url,
+            'map_url': map_url,  # Adicionando a URL do mapa no contexto
         }
         if alerts:
             send_alert_email(request.user.email, weather_data, alerts)
@@ -156,13 +151,11 @@ def admin_view(request):
     }
     return render(request, 'G2app/admin_view.html', context)
 
-def logout(request):
-    # Remover o usuário da sessão
-    if 'user' in request.session:
-     del request.session[' user']  
-    
+def logout_view(request):
+    # Use a função de logout do Django
+    auth_logout(request)
     # Redirecionar para a página de login ou página inicial
-    return redirect('signup')
+    return redirect('login')
 
 # G2app/tasks.py
 def fetch_weather_data(location=None, latitude=None, longitude=None):
