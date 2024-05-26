@@ -15,6 +15,8 @@ from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+import math
 
 def inicio(request):
     if request.method == 'POST':
@@ -202,31 +204,57 @@ def normalize(value, min_value, max_value):
 def analyze_weather_data(weather_data):
     alerts = []
     
-    temp = weather_data['main']['temp']
-    humidity = weather_data['main']['humidity']
-    pressure = weather_data['main']['pressure']
+    try:
+        temp = weather_data['main']['temp']
+        humidity = weather_data['main']['humidity']
+        pressure = weather_data['main']['pressure']
+        wind_speed = weather_data['wind']['speed']
+        wind_deg = weather_data['wind']['deg']
+        visibility = weather_data.get('visibility', 10000)  # visibilidade em metros
+        weather_conditions = weather_data['weather'][0]['id']  # código do tempo atual
 
-    # Normalizar os valores
-    temp_normalized = normalize(temp, -30, 50)  # Exemplo de faixa de temperatura em graus Celsius
-    humidity_normalized = normalize(humidity, 0, 100)  # Umidade relativa em porcentagem
-    pressure_normalized = normalize(pressure, 870, 1080)  # Faixa de pressão em hPa
+        print(f"Dados recebidos - Temp: {temp}, Humidity: {humidity}, Pressure: {pressure}, Wind Speed: {wind_speed}, Wind Deg: {wind_deg}, Visibility: {visibility}, Conditions: {weather_conditions}")
 
-    # Heurísticas para calcular probabilidades
-    storm_probability = (temp_normalized * 0.4 + humidity_normalized * 0.4 + (1 - pressure_normalized) * 0.2) * 100
-    drought_probability = ((1 - humidity_normalized) * 0.7 + (1 - temp_normalized) * 0.3) * 100
-    hail_probability = (temp_normalized * 0.5 + (1 - humidity_normalized) * 0.3 + (1 - pressure_normalized) * 0.2) * 100
+        # Normalizar os valores
+        temp_normalized = normalize(temp, -30, 50)  # Exemplo de faixa de temperatura em graus Celsius
+        humidity_normalized = normalize(humidity, 0, 100)  # Umidade relativa em porcentagem
+        pressure_normalized = normalize(pressure, 870, 1080)  # Faixa de pressão em hPa
+        wind_speed_normalized = normalize(wind_speed, 0, 50)  # Velocidade do vento em m/s
+        visibility_normalized = normalize(visibility, 0, 10000)  # Visibilidade em metros
 
-    # Adicionar alertas se a probabilidade ultrapassar certos limiares
-    if storm_probability > 70:
-        alerts.append(f'Probabilidade de tempestade severa: {storm_probability:.2f}%')
-    
-    if drought_probability > 70:
-        alerts.append(f'Probabilidade de seca: {drought_probability:.2f}%')
-    
-    if hail_probability > 50:
-        alerts.append(f'Probabilidade de queda de granizo: {hail_probability:.2f}%')
+        # Heurísticas para calcular probabilidades
+        storm_probability = (temp_normalized * 0.3 + humidity_normalized * 0.3 + wind_speed_normalized * 0.2 + (1 - pressure_normalized) * 0.2) * 100
+        drought_probability = ((1 - humidity_normalized) * 0.6 + (1 - temp_normalized) * 0.3 + (1 - visibility_normalized) * 0.1) * 100
+        hail_probability = (temp_normalized * 0.4 + (1 - humidity_normalized) * 0.3 + (1 - pressure_normalized) * 0.2 + wind_speed_normalized * 0.1) * 100
+        snow_probability = (temp_normalized * 0.2 + humidity_normalized * 0.3 + (1 - pressure_normalized) * 0.2 + (1 - visibility_normalized) * 0.3) * 100
+        fog_probability = (humidity_normalized * 0.4 + (1 - visibility_normalized) * 0.6) * 100
+        heat_wave_probability = (temp_normalized * 0.7 + (1 - humidity_normalized) * 0.3) * 100
+
+        # Adicionar alertas se a probabilidade ultrapassar certos limiares
+        if storm_probability > 70:
+            alerts.append(f'Probabilidade de tempestade severa: {storm_probability:.2f}%')
+
+        if drought_probability > 70:
+            alerts.append(f'Probabilidade de seca: {drought_probability:.2f}%')
+
+        if hail_probability > 50:
+            alerts.append(f'Probabilidade de queda de granizo: {hail_probability:.2f}%')
+
+        if snow_probability > 50 and temp < 0:
+            alerts.append(f'Probabilidade de nevasca: {snow_probability:.2f}%')
+
+        if fog_probability > 50:
+            alerts.append(f'Probabilidade de neblina: {fog_probability:.2f}%')
+
+        if heat_wave_probability > 75:
+            alerts.append(f'Probabilidade de onda de calor: {heat_wave_probability:.2f}%')
+
+    except KeyError as e:
+        print(f"Erro ao acessar dados do JSON: {e}")
 
     return alerts
+
+
 
 def send_alert_email(email, weather_data, alerts):
     subject = 'Weather Alert Notification'
@@ -291,3 +319,31 @@ def delete_location(request, location_id):
     location = get_object_or_404(AlertLocation, id=location_id)
     location.delete()
     return JsonResponse({'success': True})
+
+@csrf_exempt
+def check_weather_events_now(request):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return JsonResponse({'success': False, 'message': 'Usuário não autenticado.'})
+        
+        alert_locations = AlertLocation.objects.filter(usuario=request.user)
+        if not alert_locations.exists():
+            return JsonResponse({'success': False, 'message': 'Nenhuma localidade salva para alertas.'})
+        
+        events_found = False
+        for location in alert_locations:
+            weather_data = fetch_weather_data(location=location.local_pesquisa)
+            if weather_data:
+                print(f"Dados meteorológicos para {location.local_pesquisa}: {weather_data}")
+                alerts = analyze_weather_data(weather_data)
+                if alerts:
+                    print(f"Alertas encontrados: {alerts}")
+                    send_alert_email(request.user.email, weather_data, alerts)
+                    events_found = True
+        
+        if events_found:
+            return JsonResponse({'success': True, 'message': 'Eventos meteorológicos encontrados e emails enviados.'})
+        else:
+            return JsonResponse({'success': True, 'message': 'Nenhum evento meteorológico encontrado.'})
+
+    return JsonResponse({'success': False, 'message': 'Método inválido.'})

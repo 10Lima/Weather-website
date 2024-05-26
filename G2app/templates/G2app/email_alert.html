@@ -1,14 +1,15 @@
+<!-- G2app/templates/G2app/email_alert.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Alerta Metereologica</title>
+    <title>Alerta Meteorológico</title>
 </head>
 <body>
-    <h1>>Alerta Metereologico</h1>
+    <h1>Alerta Meteorológico</h1>
     <p>Localização: {{ weather_data.name }}</p>
     <p>Temperatura: {{ weather_data.main.temp }} °C</p>
     <p>Descrição: {{ weather_data.weather.0.description }}</p>
-    <h2>Alerta</h2>
+    <h2>Alertas</h2>
     <ul>
         {% for alert in alerts %}
             <li>{{ alert }}</li>

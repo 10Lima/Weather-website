@@ -14,6 +14,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 from celery.schedules import crontab
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -131,23 +134,25 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# meteorologia/settings.py
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+
+# Configurações adicionais do Celery
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
 from .celery import app as celery_app
 
 __all__ = ('celery_app',)
 
-# Configurações de e-mail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'forecastnow49@gmail.com' 
-EMAIL_HOST_PASSWORD = 'dpui wapq rmga zeyn'  
-
-
-GOOGLE_MAPS_API_KEY = 'AIzaSyANVnlD8qgnSzhL7UWTSmBPlaisCb37K-c'
+EMAIL_HOST_USER = 'forecastnow49@gmail.com'
+EMAIL_HOST_PASSWORD = 'dpui wapq rmga zeyn'
+DEFAULT_FROM_EMAIL = 'forecastnow49@gmail.com'
