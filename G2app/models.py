@@ -1,17 +1,13 @@
-#models.py
-from django.db import models
-
-# Create your models here.
-
-
+# models.py
 from django.db import models
 from django.contrib.auth.models import User
 
 class HistoricoPesquisa(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    data_pesquisa = models.DateTimeField(auto_now_add=True)
-    local_pesquisa = models.CharField(max_length=200)
+    local_pesquisa = models.CharField(max_length=255)
     resultado_pesquisa = models.TextField()
+    data_pesquisa = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f'{self.usuario} pesquisou {self.local_pesquisa} em {self.data_pesquisa}'
+class AlertLocation(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    local_pesquisa = models.CharField(max_length=255)

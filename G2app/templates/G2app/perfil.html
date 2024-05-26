@@ -1,20 +1,50 @@
 <!-- perfil.html -->
-
 {% extends 'G2app/index.html' %}
 
 {% block content %}
 <div class="container">
+  {% if messages %}
+    <div class="alert-container">
+      {% for message in messages %}
+        <div class="alert {% if 'success' in message.tags %}alert-success{% else %}alert-danger{% endif %}">
+          {{ message }}
+          <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
   <div class="main-body">
-    
-    <!-- Breadcrumb - Opcional, pode remover se não precisar -->
-    <!-- Código omitido para brevidade -->
-
-    <div class="row gutters-sm">
-      <div class="col-md-4 mb-3">
-        <!-- Informações do usuário e foto, se quiser adicionar -->
-        <!-- Código omitido para brevidade -->
-
-        <!-- Histórico de Pesquisas -->
+    <div class="row">
+      <div class="col-md-4 alert-selection">
+        <h4>Selecione as localidades para alertas</h4>
+        <form id="location-form" method="post" action="{% url 'update_alert_locations' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="location_input">Adicionar Localidade:</label>
+            <div class="input-group">
+              <input type="text" id="location-input" name="location_input" class="form-control" placeholder="Digite uma localidade">
+              <div class="input-group-append">
+                <button type="button" id="add-location-btn" class="btn btn-primary">Adicionar</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="saved_locations">Localidades Salvas:</label>
+            <ul id="saved-locations" class="list-group">
+              {% for location in alert_locations %}
+                <li class="list-group-item">
+                  {{ location.local_pesquisa }}
+                  <span class="alert-icon">&#x1F514;</span> <!-- Ícone de sino -->
+                  <button type="button" class="btn btn-danger btn-sm delete-location-btn" data-id="{{ location.id }}">Excluir</button>
+                  <input type="hidden" name="alert_locations" value="{{ location.local_pesquisa }}">
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+      </div>
+      <div class="col-md-8">
         <div class="card mt-3">
           <div class="card-body">
             <h4>Histórico de Pesquisas Meteorológicas</h4>
@@ -24,20 +54,67 @@
                   {{ pesquisa.data }} - {{ pesquisa.local }}: {{ pesquisa.temperatura }}°C
                 </li>
               {% empty %}
-                <li class="list-group-item">Você ainda não fez nenhuma pesquisa.</li>
+                <li class="list-group-item">Ainda não fizeste nenhuma pesquisa.</li>
               {% endfor %}
             </ul>
-            
           </div>
         </div>
+        <a href="{% url 'logout' %}" class="logout-button">Sair da conta</a>
       </div>
-
-      <!-- Outras informações do usuário, se quiser adicionar -->
-      <!-- Código omitido para brevidade -->
-     <!-- No seu template HTML -->
-          <a href="{% url 'logout' %}">Sair</a>
     </div>
   </div>
 </div>
-{% endblock %}
 
+<script>
+  document.getElementById('add-location-btn').addEventListener('click', function() {
+      const locationInput = document.getElementById('location-input').value.trim();
+      if (locationInput) {
+          const listItem = document.createElement('li');
+          listItem.textContent = locationInput;
+          listItem.classList.add('list-group-item');
+          const alertIcon = document.createElement('span');
+          alertIcon.innerHTML = '&#x1F514;'; // Ícone de sino
+          alertIcon.classList.add('alert-icon', 'alert-icon-new'); // Ícone vermelho para novos
+          listItem.appendChild(alertIcon);
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Excluir';
+          deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'delete-location-btn');
+          deleteButton.setAttribute('type', 'button');
+          listItem.appendChild(deleteButton);
+          document.getElementById('saved-locations').appendChild(listItem);
+          const hiddenInput = document.createElement('input');
+          hiddenInput.type = 'hidden';
+          hiddenInput.name = 'alert_locations';
+          hiddenInput.value = locationInput;
+          document.getElementById('location-form').appendChild(hiddenInput);
+          document.getElementById('location-input').value = '';
+  
+          deleteButton.addEventListener('click', function() {
+              listItem.remove();
+              hiddenInput.remove();
+          });
+      }
+  });
+  
+  document.querySelectorAll('.delete-location-btn').forEach(function(button) {
+      button.addEventListener('click', function() {
+          const locationId = button.getAttribute('data-id');
+          fetch(`/delete_location/${locationId}/`, {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': '{{ csrf_token }}',
+                  'Content-Type': 'application/json',
+              },
+          }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    button.closest('li').remove();
+                } else {
+                    alert('Erro ao excluir a localização.');
+                }
+            });
+      });
+  });
+</script>
+  
+{% endblock %}

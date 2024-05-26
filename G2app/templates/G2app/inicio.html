@@ -45,8 +45,9 @@
         <p>Temperatura Máxima: {{ temp_max }}°C</p>
         <p>Temperatura Mínima: {{ temp_min }}°C</p>
         <p>Pressão: {{ pressure }} hPa</p>
-        <p>Chuva na Última Hora: {{ rain }}</p>
-        <p>Vento: {{ wind_speed }} m/s, {{ wind_dir }}</p>
+        <p>Humidade: {{ humidity }}%</p>
+        <p>Chuva na Última Hora: {{ rain | default:"Sem chuva" }}</p>
+        <p>Vento: {{ wind_speed }} m/s, {{ wind_deg }}°</p>
     </div>
 </div>
 <div class="weather-forecast">
@@ -87,9 +88,9 @@
         <tbody>
             {% for day in historical_data %}
             <tr>
-                <td>{{ day.dt }}</td>
-                <td>{{ day.temp }}°C</td>
-                <td>{{ day.weather.0.description | title }}</td>
+                <td>{{ day.dt | default:"-" }}</td>
+                <td>{{ day.temp | default:"-" }}°C</td>
+                <td>{{ day.weather.0.description | title | default:"-" }}</td>
             </tr>
             {% endfor %}
         </tbody>

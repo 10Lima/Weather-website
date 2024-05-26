@@ -1,6 +1,18 @@
 <!-- login.html -->
 {% extends 'G2app/index.html' %}  
+
 {% block content %}
+  {% if messages %}
+    <div class="alert-container">
+      {% for message in messages %}
+        <div class="alert {% if 'success' in message.tags %}alert-success{% else %}alert-danger{% endif %}">
+          {{ message }}
+          <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  
   <div class="login-box">
     <h1>Login</h1>
     <form method="post">
@@ -17,18 +29,19 @@
         Não tens conta? <a href="{% url 'signup' %}">Cria aqui</a>
     </p>
     <p class="para-2">
-        <a href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
+        <a href="{% url 'password_reset' %}">Esqueces-te da Pass?</a>
     </p>
   </div>
+  
   {% if form.errors %}
     <div class="error-messages">
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
+      <ul>
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
     </div>
   {% endif %}
 {% endblock %}

@@ -26,6 +26,21 @@ header {
   z-index: 100;
 }
 
+.nome h1 {
+  color: rgb(243, 255, 6);
+  font-size: 50px;
+  text-shadow: 
+    -1px -1px 0 #00000049,  
+     1px -1px 0 #00000049,
+    -1px  1px 0 #00000049,
+     1px  1px 0 #00000049;
+  margin-left: 400px;
+}
+
+.nome h1 span {
+  color: white;
+}
+
 .logo {
   margin-right: 20px;
 }
@@ -486,4 +501,146 @@ table th {
 .user-history table th {
   background-color: #2193b0;
   color: white;
+}
+
+/* Estilização do botão de sair */
+.logout-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff4b5c;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #ff1e36;
+  color: #ffffff;
+}
+
+/* Novo estilo para a seleção de locais de alerta */
+.alert-selection {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.alert-selection h4 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.alert-selection form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  flex-grow: 1;
+}
+
+.input-group-append {
+  margin-left: 10px;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert-icon {
+  margin-left: 10px;
+  color: #ff9800; /* Cor do sino */
+}
+
+.alert-icon-new {
+  color: red; /* Cor do sino para novos locais */
+}
+
+.alert-selection button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.alert-selection button:hover {
+  background-color: #0056b3;
+}
+
+/* Ajustar a tabela do histórico de pesquisa */
+.card.mt-3 {
+  margin-top: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 80px; /* Ajuste conforme necessário */
+}
+
+/* Estilo para mensagens de erro e sucesso */
+.alert-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  z-index: 1000;
+}
+
+.alert {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.alert-danger .close-btn {
+  color: #721c24;
+}
+
+.alert-success .close-btn {
+  color: #155724;
+}
+
+.alert .close-btn:hover {
+  color: #000;
 }

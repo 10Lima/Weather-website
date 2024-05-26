@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 import requests
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from .forms import SignUpForm
-from .models import HistoricoPesquisa
+from .models import HistoricoPesquisa, AlertLocation
 import json
 from datetime import datetime, timedelta
 from django.contrib import messages
@@ -12,11 +12,16 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.contrib.auth import logout
-from django.shortcuts import redirect
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 def inicio(request):
     if request.method == 'POST':
+        if not request.user.is_authenticated:
+            messages.error(request, 'Precisas entrar ou criar conta para realizar a pesquisa.')
+            return redirect('login')
+
         search_type = request.POST['search_type']
         api_key = '941376db0bf38f9867c309281b11da60'
         location = None 
@@ -34,7 +39,7 @@ def inicio(request):
         response = requests.get(api_url)
         if response.status_code == 200:
             weather_data = response.json()
-            print(weather_data)  # Adicione esta linha para depuração
+            print("Current Weather Data:", weather_data)
         else:
             messages.error(request, 'Erro ao buscar dados de clima.')
             return render(request, 'G2app/inicio.html')
@@ -45,6 +50,7 @@ def inicio(request):
         forecast_api_url = f'http://api.openweathermap.org/data/2.5/forecast/daily?lat={latitude}&lon={longitude}&cnt=7&appid={api_key}&lang=pt&units=metric'
         forecast_response = requests.get(forecast_api_url)
         forecast_data = forecast_response.json().get('list', [])
+        print("Forecast Data:", forecast_data)
 
         # Dados históricos dos últimos 5 dias 
         historical_data = []
@@ -52,12 +58,20 @@ def inicio(request):
             end = int((datetime.now() - timedelta(days=days_ago)).timestamp())
             start = end - 86400
             history_api_url = f'https://history.openweathermap.org/data/2.5/history/city?lat={latitude}&lon={longitude}&type=hour&start={start}&end={end}&appid={api_key}'
+            print(f"Fetching historical data from: {history_api_url}")  # Adicionando esta linha para depuração
             history_response = requests.get(history_api_url)
             if history_response.status_code == 200:
-                historical_data.append(history_response.json().get('current', {}))
+                history_data = history_response.json()
+                print(f"Historical Data Response for {days_ago} days ago:", history_data)
+                if 'current' in history_data:
+                    historical_item = history_data['current']
+                else:
+                    historical_item = history_data.get('list', [])
+                historical_data.append(historical_item)
             else:
                 print("Erro ao buscar dados históricos:", history_response.status_code, history_response.text)
-           
+                historical_data.append({})
+
         for day in forecast_data:
             day['dt'] = datetime.utcfromtimestamp(day['dt']).strftime('%d-%m-%y')
         
@@ -76,31 +90,39 @@ def inicio(request):
             'temp_max': weather_data['main'].get('temp_max', ''),
             'temp_min': weather_data['main'].get('temp_min', ''),
             'pressure': weather_data['main'].get('pressure', ''),
+            'humidity': weather_data['main'].get('humidity', ''),
             'rain': weather_data.get('rain', {}).get('1h', 'No rain'),
             'description': weather_data['weather'][0].get('description', ''),
             'icon': weather_data['weather'][0].get('icon', ''),
+            'wind_speed': weather_data['wind'].get('speed', ''),
+            'wind_deg': weather_data['wind'].get('deg', ''),
             'alerts': alerts,
-            'map_url': map_url,  # Adicionando a URL do mapa no contexto
+            'map_url': map_url,
         }
         if alerts:
             send_alert_email(request.user.email, weather_data, alerts)
 
-        if search_type == 'location':
-            location = request.POST['location']
-            local_pesquisa = location
-        elif search_type == 'coordinates':
-            latitude = request.POST['latitude']
-            longitude = request.POST['longitude']
-            local_pesquisa = f"Latitude: {latitude}, Longitude: {longitude}"
-        if response.status_code == 200:
-            HistoricoPesquisa.objects.create(
-                usuario=request.user,
-                local_pesquisa=local_pesquisa,
-                resultado_pesquisa=response.text  
-            )
+        if request.user.is_authenticated:
+            if search_type == 'location':
+                location = request.POST['location']
+                local_pesquisa = location
+            elif search_type == 'coordinates':
+                latitude = request.POST['latitude']
+                longitude = request.POST['longitude']
+                local_pesquisa = f"Latitude: {latitude}, Longitude: {longitude}"
+            if response.status_code == 200:
+                HistoricoPesquisa.objects.create(
+                    usuario=request.user,
+                    local_pesquisa=local_pesquisa,
+                    resultado_pesquisa=response.text  
+                )
+        else:
+            messages.error(request, 'Precisa ter conta para salvar o histórico de pesquisa.')
+
         return render(request, 'G2app/inicio.html', context)
     else:
         return render(request, 'G2app/inicio.html')
+
 
 
 def signup(request):
@@ -157,7 +179,7 @@ def logout_view(request):
     # Redirecionar para a página de login ou página inicial
     return redirect('login')
 
-# G2app/tasks.py
+# GVerificar eventos meterologicos 
 def fetch_weather_data(location=None, latitude=None, longitude=None):
     api_key = '941376db0bf38f9867c309281b11da60'
     
@@ -214,3 +236,58 @@ def send_alert_email(email, weather_data, alerts):
     to = email
 
     send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+
+def perfil_usuario(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    historico = HistoricoPesquisa.objects.filter(usuario=request.user).order_by('-data_pesquisa')
+    historico_formatado = []
+
+    for item in historico:
+        dados = json.loads(item.resultado_pesquisa)
+        historico_formatado.append({
+            'data': item.data_pesquisa,
+            'local': item.local_pesquisa,
+            'temperatura': dados['main']['temp'],
+        })
+
+    alert_locations = AlertLocation.objects.filter(usuario=request.user)
+
+    return render(request, 'G2app/perfil.html', {
+        'historico': historico_formatado,
+        'alert_locations': alert_locations,
+    })
+
+def update_alert_locations(request):
+    if request.method == 'POST':
+        selected_locations = request.POST.getlist('alert_locations')
+        valid_locations = []
+        for location in selected_locations:
+            if validate_location(location):
+                valid_locations.append(location)
+            else:
+                messages.error(request, f'Localidade inválida: {location}', extra_tags='error')
+        
+        if valid_locations:
+            for location in valid_locations:
+                if not AlertLocation.objects.filter(usuario=request.user, local_pesquisa=location).exists():
+                    AlertLocation.objects.create(usuario=request.user, local_pesquisa=location)
+            messages.success(request, 'Localidades de alerta atualizadas com sucesso.', extra_tags='success')
+        else:
+            messages.error(request, 'Nenhuma localidade válida foi fornecida.', extra_tags='error')
+
+    return redirect('perfil')
+
+
+def validate_location(location):
+    api_key = '941376db0bf38f9867c309281b11da60'
+    api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
+    response = requests.get(api_url)
+    return response.status_code == 200
+
+@require_POST
+def delete_location(request, location_id):
+    location = get_object_or_404(AlertLocation, id=location_id)
+    location.delete()
+    return JsonResponse({'success': True})
