@@ -17,9 +17,32 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 import math
+import matplotlib.pyplot as plt
+import io
+import urllib, base64
 
+# Função para criar gráficos
+def create_chart(data, title, ylabel):
+    plt.figure(figsize=(10, 5))
+    plt.plot(data['dates'], data['values'], marker='o')
+    plt.title(title)
+    plt.xlabel('Data')
+    plt.ylabel(ylabel)
+    plt.grid(True)
+    plt.xticks(rotation=45)
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    string = base64.b64encode(buf.read())
+    uri = urllib.parse.quote(string)
+    
+    return uri
+
+# Função principal de início
 def inicio(request):
     if request.method == 'POST':
+        # Verificar se o utilizador está autenticado
         if not request.user.is_authenticated:
             messages.error(request, 'Precisas entrar ou criar conta para realizar a pesquisa.')
             return redirect('login')
@@ -29,6 +52,7 @@ def inicio(request):
         location = None 
         coordinates = None
         
+        # Definir URL da API com base no tipo de pesquisa
         if search_type == 'location':
             location = request.POST['location']
             api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
@@ -38,6 +62,7 @@ def inicio(request):
             longitude = request.POST['longitude']
             api_url = f'http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&lang=pt&units=metric'
 
+        # Obter dados do tempo atual
         response = requests.get(api_url)
         if response.status_code == 200:
             weather_data = response.json()
@@ -49,12 +74,13 @@ def inicio(request):
         latitude = weather_data.get('coord', {}).get('lat')
         longitude = weather_data.get('coord', {}).get('lon')
 
+        # Obter dados de previsão do tempo
         forecast_api_url = f'http://api.openweathermap.org/data/2.5/forecast/daily?lat={latitude}&lon={longitude}&cnt=7&appid={api_key}&lang=pt&units=metric'
         forecast_response = requests.get(forecast_api_url)
         forecast_data = forecast_response.json().get('list', [])
         print("Forecast Data:", forecast_data)
 
-        # Dados históricos dos últimos 5 dias 
+        # Obter dados históricos dos últimos 5 dias
         historical_data = []
         for days_ago in range(1, 6):
             end = int((datetime.now() - timedelta(days=days_ago)).timestamp())
@@ -84,6 +110,16 @@ def inicio(request):
         map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={latitude},{longitude}&zoom=12&size=600x400&markers=color:red%7C{latitude},{longitude}&key={google_maps_api_key}"
         print(map_url)
 
+        # Dados para os gráficos
+        dates = [day['dt'] for day in forecast_data]
+        temps = [day['temp']['day'] for day in forecast_data]
+        humidity = [day['humidity'] for day in forecast_data]
+        pressure = [day['pressure'] for day in forecast_data]
+
+        temp_chart = create_chart({'dates': dates, 'values': temps}, 'Previsão de Temperatura', 'Temperatura (°C)')
+        humidity_chart = create_chart({'dates': dates, 'values': humidity}, 'Previsão de Humidade', 'Umidade (%)')
+        pressure_chart = create_chart({'dates': dates, 'values': pressure}, 'Previsão de Pressão', 'Pressão (hPa)')
+
         context = {
             'forecast_data': forecast_data,
             'historical_data': historical_data,
@@ -100,10 +136,16 @@ def inicio(request):
             'wind_deg': weather_data['wind'].get('deg', ''),
             'alerts': alerts,
             'map_url': map_url,
+            'temp_chart': temp_chart,
+            'humidity_chart': humidity_chart,
+            'pressure_chart': pressure_chart,
         }
+        
+        # Enviar email se houver alertas
         if alerts:
             send_alert_email(request.user.email, weather_data, alerts)
 
+        # Guardar histórico de pesquisa se o utilizador estiver autenticado
         if request.user.is_authenticated:
             if search_type == 'location':
                 location = request.POST['location']
@@ -125,8 +167,7 @@ def inicio(request):
     else:
         return render(request, 'G2app/inicio.html')
 
-
-
+# Função para criar uma nova conta de utilizador
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -141,7 +182,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'G2app/signup.html', {'form': form})
 
-
+# Função para mostrar o perfil do utilizador
 def perfil_usuario(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -157,11 +198,11 @@ def perfil_usuario(request):
         })
     return render(request, 'G2app/perfil.html', {'historico': historico_formatado})
 
-
+# Função para verificar se o utilizador é superutilizador
 def is_superuser(user):
     return user.is_superuser
 
-
+# Função para a vista de administrador
 def admin_view(request):
     usuarios_historico = {}
     users = User.objects.all()
@@ -175,13 +216,12 @@ def admin_view(request):
     }
     return render(request, 'G2app/admin_view.html', context)
 
+# Função para fazer logout
 def logout_view(request):
-    # Use a função de logout do Django
     auth_logout(request)
-    # Redirecionar para a página de login ou página inicial
     return redirect('login')
 
-# GVerificar eventos meterologicos 
+# Função para obter dados meteorológicos
 def fetch_weather_data(location=None, latitude=None, longitude=None):
     api_key = '941376db0bf38f9867c309281b11da60'
     
@@ -198,9 +238,11 @@ def fetch_weather_data(location=None, latitude=None, longitude=None):
     else:
         return None
 
+# Função para normalizar valores
 def normalize(value, min_value, max_value):
     return (value - min_value) / (max_value - min_value)
 
+# Função para analisar dados meteorológicos e gerar alertas
 def analyze_weather_data(weather_data):
     alerts = []
     
@@ -254,8 +296,7 @@ def analyze_weather_data(weather_data):
 
     return alerts
 
-
-
+# Função para enviar email de alerta
 def send_alert_email(email, weather_data, alerts):
     subject = 'Weather Alert Notification'
     html_message = render_to_string('G2app/email_alert.html', {'weather_data': weather_data, 'alerts': alerts})
@@ -265,6 +306,7 @@ def send_alert_email(email, weather_data, alerts):
 
     send_mail(subject, plain_message, from_email, [to], html_message=html_message)
 
+# Função para mostrar o perfil do utilizador
 def perfil_usuario(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -287,6 +329,7 @@ def perfil_usuario(request):
         'alert_locations': alert_locations,
     })
 
+# Função para atualizar as localidades de alerta
 def update_alert_locations(request):
     if request.method == 'POST':
         selected_locations = request.POST.getlist('alert_locations')
@@ -307,19 +350,21 @@ def update_alert_locations(request):
 
     return redirect('perfil')
 
-
+# Função para validar a localidade
 def validate_location(location):
     api_key = '941376db0bf38f9867c309281b11da60'
     api_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&lang=pt&units=metric'
     response = requests.get(api_url)
     return response.status_code == 200
 
+# Função para apagar localidade
 @require_POST
 def delete_location(request, location_id):
     location = get_object_or_404(AlertLocation, id=location_id)
     location.delete()
     return JsonResponse({'success': True})
 
+# Função para verificar eventos meteorológicos agora
 @csrf_exempt
 def check_weather_events_now(request):
     if request.method == 'POST':

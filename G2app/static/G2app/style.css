@@ -1,4 +1,5 @@
 /* Estilo global e body */
+/* Estilo global e body */
 * {
   margin: 0;
   padding: 0;
@@ -225,6 +226,35 @@ header {
 .weather-details {
   border-top: 1px solid #555;
   padding-top: 10px;
+}
+
+/* Estilo para os gráficos */
+.weather-chart {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.chart-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(50% - 20px); /* Para deixar dois gráficos lado a lado */
+  margin: 20px 0;
+}
+
+.chart-container img {
+  width: 100%;
+  height: auto;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 767px) {
+  .chart-container {
+    width: 100%; /* Ocupa 100% da largura em telas menores */
+  }
 }
 
 /* Caixas de login e signup */
@@ -645,8 +675,8 @@ table th {
     width: 100%;
     margin-top: 10px;
   }
+
   .weather-map img {
     width: 100%;
   }
 }
-

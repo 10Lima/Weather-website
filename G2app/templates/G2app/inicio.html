@@ -50,6 +50,22 @@
         <p>Vento: {{ wind_speed }} m/s, {{ wind_deg }}°</p>
     </div>
 </div>
+
+<div class="weather-chart">
+    <div class="chart-container">
+        <h2>Gráfico de Temperatura</h2>
+        <img src="data:image/png;base64,{{ temp_chart }}" alt="Gráfico de Temperatura">
+    </div>
+    <div class="chart-container">
+        <h2>Gráfico de Humidade</h2>
+        <img src="data:image/png;base64,{{ humidity_chart }}" alt="Gráfico de Humidade">
+    </div>
+    <div class="chart-container">
+        <h2>Gráfico de Pressão</h2>
+        <img src="data:image/png;base64,{{ pressure_chart }}" alt="Gráfico de Pressão">
+    </div>
+</div>
+
 <div class="weather-forecast">
     <h2>Previsão para os Próximos 7 Dias</h2>
     <table>
