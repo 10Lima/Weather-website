@@ -80,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'meteorologia.wsgi.application'
 
+GOOGLE_MAPS_API_KEY = 'AIzaSyANVnlD8qgnSzhL7UWTSmBPlaisCb37K-c'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

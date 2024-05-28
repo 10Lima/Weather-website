@@ -98,8 +98,9 @@ header {
 /* Container para formulário de pesquisa e mapa */
 .content-container {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 100px auto;
   padding: 2em;
   max-width: 1200px;
@@ -110,7 +111,8 @@ header {
   background-color: white;
   padding: 2em;
   border-radius: 10px;
-  width: 45%;
+  width: 100%;
+  max-width: 500px;
   box-shadow: -8px 0 15px -5px rgba(0, 0, 0, 0.1);
   text-align: left;
 }
@@ -167,8 +169,9 @@ header {
 
 /* Estilização do mapa */
 .weather-map {
-  width: 50%;
+  width: 100%;
   text-align: center;
+  margin-top: 20px;
 }
 
 .weather-map h2 {
@@ -178,6 +181,7 @@ header {
 
 .weather-map img {
   width: 70%;
+  max-width: 600px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -188,7 +192,8 @@ header {
   color: white;
   border-radius: 10px;
   padding: 20px;
-  width: 300px;
+  width: 90%;
+  max-width: 300px;
   margin: 20px auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -223,26 +228,19 @@ header {
 }
 
 /* Caixas de login e signup */
-.signup-box {
-  width: 360px;
-  height: 620px;
+.signup-box,
+.login-box,
+.reset-box,
+.message-box {
+  width: 90%;
+  max-width: 360px;
   margin: auto;
   background-color: white;
   border-radius: 10px;
   margin-top: 200px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-}
-
-.login-box {
-  width: 360px;
-  height: 320px;
-  margin: auto;
-  border-radius: 10px;
-  background-color: white;
-  margin-top: 200px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  text-align: center;
 }
 
 form {
@@ -308,7 +306,7 @@ p {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 90%;
   margin: auto;
   padding-top: 120px;
   background-color: #f4f4f4;
@@ -339,7 +337,7 @@ p {
 
 .weather-forecast,
 .weather-history {
-  max-width: 800px;
+  max-width: 100%;
   margin: 20px auto;
   background: #ffffff;
   padding: 20px;
@@ -412,40 +410,8 @@ table th {
   border-radius: 5px;
 }
 
-.reset-box {
-  width: 360px;
-  margin: auto;
-  border-radius: 10px;
-  background-color: white;
-  margin-top: 200px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-}
-
-.reset-box h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.message-box {
-  width: 360px;
-  margin: auto;
-  border-radius: 10px;
-  background-color: white;
-  margin-top: 200px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-}
-
-.message-box h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
 .admin-view {
-  max-width: 1000px;
+  max-width: 90%;
   margin: 100px auto;
   background: white;
   padding: 20px;
@@ -528,6 +494,7 @@ table th {
   padding: 20px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 .alert-selection h4 {
@@ -644,3 +611,42 @@ table th {
 .alert .close-btn:hover {
   color: #000;
 }
+
+/* Media Queries */
+@media (min-width: 768px) {
+  .content-container {
+    flex-direction: row;
+  }
+
+  .weather-form, .weather-map {
+    width: 45%;
+  }
+
+  .signup-box, .login-box, .reset-box, .message-box {
+    width: 360px;
+  }
+}
+
+@media (max-width: 767px) {
+  .nome h1 {
+    margin-left: 20px;
+    font-size: 36px;
+  }
+
+  .navbar {
+    flex-direction: column;
+  }
+
+  .navbar a {
+    margin: 10px 0;
+  }
+
+  .alert-selection {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .weather-map img {
+    width: 100%;
+  }
+}
+

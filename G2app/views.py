@@ -237,13 +237,13 @@ def analyze_weather_data(weather_data):
         if drought_probability > 70:
             alerts.append(f'Probabilidade de seca: {drought_probability:.2f}%')
 
-        if hail_probability > 50:
+        if hail_probability > 70:
             alerts.append(f'Probabilidade de queda de granizo: {hail_probability:.2f}%')
 
         if snow_probability > 50 and temp < 0:
             alerts.append(f'Probabilidade de nevasca: {snow_probability:.2f}%')
 
-        if fog_probability > 50:
+        if fog_probability > 60:
             alerts.append(f'Probabilidade de neblina: {fog_probability:.2f}%')
 
         if heat_wave_probability > 75:
