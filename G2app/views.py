@@ -283,10 +283,10 @@ def analyze_weather_data(weather_data):
             alerts.append(f'Probabilidade de queda de granizo: {hail_probability:.2f}%')
 
         if snow_probability > 50 and temp < 0:
-            alerts.append(f'Probabilidade de nevasca: {snow_probability:.2f}%')
+            alerts.append(f'Probabilidade de nevão: {snow_probability:.2f}%')
 
         if fog_probability > 60:
-            alerts.append(f'Probabilidade de neblina: {fog_probability:.2f}%')
+            alerts.append(f'Probabilidade de Nevoeiro: {fog_probability:.2f}%')
 
         if heat_wave_probability > 75:
             alerts.append(f'Probabilidade de onda de calor: {heat_wave_probability:.2f}%')

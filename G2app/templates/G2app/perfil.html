@@ -67,29 +67,42 @@
 </div>
 
 <script>
+  // Adiciona um evento de clique ao botão de adicionar localização
   document.getElementById('add-location-btn').addEventListener('click', function() {
       const locationInput = document.getElementById('location-input').value.trim();
       if (locationInput) {
+          // Cria um novo item de lista com o valor da localização
           const listItem = document.createElement('li');
           listItem.textContent = locationInput;
           listItem.classList.add('list-group-item');
+
+          // Adiciona um ícone de alerta (sino) ao item da lista
           const alertIcon = document.createElement('span');
           alertIcon.innerHTML = '&#x1F514;'; // Ícone de sino
-          alertIcon.classList.add('alert-icon', 'alert-icon-new'); // Ícone vermelho para novos
+          alertIcon.classList.add('alert-icon', 'alert-icon-new'); // Ícone vermelho para novos (não funciona)
           listItem.appendChild(alertIcon);
+
+          // Adiciona um botão de excluir ao item da lista
           const deleteButton = document.createElement('button');
           deleteButton.textContent = 'Excluir';
           deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'delete-location-btn');
           deleteButton.setAttribute('type', 'button');
           listItem.appendChild(deleteButton);
+
+          // Adiciona o item da lista à lista de locais guardados
           document.getElementById('saved-locations').appendChild(listItem);
+
+          // Cria um campo escondido para armazenar a localização
           const hiddenInput = document.createElement('input');
           hiddenInput.type = 'hidden';
           hiddenInput.name = 'alert_locations';
           hiddenInput.value = locationInput;
           document.getElementById('location-form').appendChild(hiddenInput);
+
+          // Limpa o campo de input de localização
           document.getElementById('location-input').value = '';
-  
+
+          // Adiciona um evento de clique ao botão de excluir
           deleteButton.addEventListener('click', function() {
               listItem.remove();
               hiddenInput.remove();
@@ -97,6 +110,7 @@
       }
   });
 
+  // Adiciona um evento de clique ao botão de verificar eventos meteorológicos
   document.getElementById('check-weather-btn').addEventListener('click', function() {
     fetch("{% url 'check_weather_events_now' %}", {
         method: 'POST',
@@ -108,11 +122,12 @@
       .then(data => {
           alert(data.message);
       }).catch(error => {
-          console.error('Erro ao verificar eventos meteorológicos:', error);  // Adicionando logs de erro
+          console.error('Erro ao verificar eventos meteorológicos:', error); 
           alert('Erro ao verificar eventos meteorológicos. Detalhes no terminal.');
       });
-});
+  });
 
+  // Adiciona eventos de clique aos botões de excluir existentes
   document.querySelectorAll('.delete-location-btn').forEach(function(button) {
       button.addEventListener('click', function() {
           const locationId = button.getAttribute('data-id');
